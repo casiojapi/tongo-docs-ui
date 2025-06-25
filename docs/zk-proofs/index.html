@@ -1,43 +1,104 @@
 <!doctype html><html lang=en-us dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="
-  Tongo ZK Proofs
+  Zero-Knowledge Proof System
   #
+
+Tongo&rsquo;s security relies on three fundamental zero-knowledge proof primitives, all built using sigma protocols over the Stark elliptic curve. These proofs require no trusted setup and leverage only basic elliptic curve operations.
+
+  Proof Primitives
+  #
+
+All Tongo operations are built from three core proof types:
+
+POE: Proof of Exponent (discrete logarithm knowledge)
+PED: Pedersen Commitment proofs
+RAN: Range proofs (32-bit decomposition)
+
+
+  
+**No Circuits Required**: Unlike zkSNARK systems, Tongo doesn't require circuit compilation or trusted setups. All proofs use native elliptic curve arithmetic.
+
+
+
 
 
   POE: Proof of Exponent
   #
 
-Prove knowledge of x such that y = g^x.
-Public: g, y
-Private: x
-Pick k ← 𝔽_p
-Compute A = g^k
-Verifier sends challenge c
-Prover computes s = k + c⋅x
-Verifier checks: g^s = A ⋅ y^c
+The most fundamental proof demonstrates knowledge of a discrete logarithm."><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://docs.tongo.cash/docs/zk-proofs/"><meta property="og:site_name" content="Tongo Protocol"><meta property="og:title" content="Zero-Knowledge Proof System"><meta property="og:description" content="Zero-Knowledge Proof System # Tongo’s security relies on three fundamental zero-knowledge proof primitives, all built using sigma protocols over the Stark elliptic curve. These proofs require no trusted setup and leverage only basic elliptic curve operations.
+Proof Primitives # All Tongo operations are built from three core proof types:
+POE: Proof of Exponent (discrete logarithm knowledge) PED: Pedersen Commitment proofs RAN: Range proofs (32-bit decomposition) **No Circuits Required**: Unlike zkSNARK systems, Tongo doesn't require circuit compilation or trusted setups. All proofs use native elliptic curve arithmetic. POE: Proof of Exponent # The most fundamental proof demonstrates knowledge of a discrete logarithm."><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="docs"><title>Zero-Knowledge Proof System | Tongo Protocol</title><link rel=icon href=/favicon.png><link rel=manifest href=/manifest.json><link rel=canonical href=https://docs.tongo.cash/docs/zk-proofs/><link rel=stylesheet href=/book.min.a3621cc5553a2d3e6c1eef6158eab15d0c78037147ea50c2b0cc1400e7b455c5.css integrity="sha256-o2IcxVU6LT5sHu9hWOqxXQx4A3FH6lDCsMwUAOe0VcU=" crossorigin=anonymous><script defer src=/fuse.min.js></script><script defer src=/en.search.min.f638ad1f04431c5b01b2701c0a28e77eeebeee90e0dd56137e0021af744964d2.js integrity="sha256-9jitHwRDHFsBsnAcCijnfu6+7pDg3VYTfgAhr3RJZNI=" crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js onload=renderMathInElement(document.body)></script><script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:!0},{left:"$$",right:"$$",display:!0},{left:"\\(",right:"\\)",display:!1}],throwOnError:!1})})</script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>Tongo Protocol</span></a></h2><div class="book-search hidden"><input type=text id=book-search-input placeholder=Search aria-label=Search maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><script>document.querySelector(".book-search").classList.remove("hidden")</script><ul><li><a href=/docs/intro-to-tongo/>Introduction</a></li><li><a href=/docs/encryption/>Encryption System</a></li><li><a href=/docs/transfer/>Transfer Protocol</a></li><li><a href=/docs/zk-proofs/ class=active>Zero-Knowledge Proof System</a></li><li><a href=/docs/auditor/>Auditing & Compliance</a></li><li><a href=/docs/sdk/>SDK Documentation</a></li><li><a href=/docs/contracts/>Cairo Contracts</a></li><li><a href=/docs/she/>SHE Library</a></li><li><a href=/docs/tongo-sdk/>TypeScript SDK</a></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label><h3>Zero-Knowledge Proof System</h3><label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><a href=#proof-primitives>Proof Primitives</a></li><li><a href=#poe-proof-of-exponent>POE: Proof of Exponent</a><ul><li><a href=#statement>Statement</a></li><li><a href=#sigma-protocol>Sigma Protocol</a></li><li><a href=#security-properties>Security Properties</a></li></ul></li><li><a href=#ped-pedersen-commitment-proofs>PED: Pedersen Commitment Proofs</a><ul><li><a href=#statement-1>Statement</a></li><li><a href=#protocol>Protocol</a></li><li><a href=#applications-in-tongo>Applications in Tongo</a></li></ul></li><li><a href=#ran-range-proofs>RAN: Range Proofs</a><ul><li><a href=#statement-2>Statement</a></li><li><a href=#bit-decomposition>Bit Decomposition</a></li><li><a href=#bit-proof-or-protocol>Bit Proof (OR Protocol)</a></li><li><a href=#or-protocol-details>OR Protocol Details</a></li></ul></li><li><a href=#fiat-shamir-transformation>Fiat-Shamir Transformation</a><ul><li><a href=#challenge-generation>Challenge Generation</a></li><li><a href=#context-binding>Context Binding</a></li><li><a href=#example-context-hash>Example Context Hash</a></li></ul></li><li><a href=#proof-composition>Proof Composition</a><ul><li><a href=#fund-proof>Fund Proof</a></li><li><a href=#transfer-proof>Transfer Proof</a></li><li><a href=#withdraw-proof>Withdraw Proof</a></li></ul></li><li><a href=#performance-analysis>Performance Analysis</a><ul><li><a href=#transfer-cost-breakdown>Transfer Cost Breakdown</a></li><li><a href=#future-optimizations>Future Optimizations</a></li></ul></li></ul></nav></aside></header><article class="markdown book-article"><h1 id=zero-knowledge-proof-system>Zero-Knowledge Proof System
+<a class=anchor href=#zero-knowledge-proof-system>#</a></h1><p>Tongo&rsquo;s security relies on three fundamental zero-knowledge proof primitives, all built using sigma protocols over the Stark elliptic curve. These proofs require no trusted setup and leverage only basic elliptic curve operations.</p><h2 id=proof-primitives>Proof Primitives
+<a class=anchor href=#proof-primitives>#</a></h2><p>All Tongo operations are built from three core proof types:</p><ul><li><strong>POE</strong>: Proof of Exponent (discrete logarithm knowledge)</li><li><strong>PED</strong>: Pedersen Commitment proofs</li><li><strong>RAN</strong>: Range proofs (32-bit decomposition)</li></ul><blockquote class="book-hint info">**No Circuits Required**: Unlike zkSNARK systems, Tongo doesn't require circuit compilation or trusted setups. All proofs use native elliptic curve arithmetic.</blockquote><hr><h2 id=poe-proof-of-exponent>POE: Proof of Exponent
+<a class=anchor href=#poe-proof-of-exponent>#</a></h2><p>The most fundamental proof demonstrates knowledge of a discrete logarithm.</p><h3 id=statement>Statement
+<a class=anchor href=#statement>#</a></h3><p>Prove knowledge of secret $x$ such that $y = g^x$:</p>$$\pi_{\text{poe}}: \{(g, y; x) : y = g^x\}$$<h3 id=sigma-protocol>Sigma Protocol
+<a class=anchor href=#sigma-protocol>#</a></h3><div class=book-tabs><input type=radio class=toggle name=tabs-poe-protocol id=tabs-poe-protocol-0 checked>
+<label for=tabs-poe-protocol-0>Interactive</label><div class="book-tabs-content markdown-inner"><p><strong>Prover → Verifier</strong>:</p><ol><li>Choose random $k \leftarrow \mathbb{F}_p$</li><li>Compute $A = g^k$</li><li>Send $A$</li></ol><p><strong>Verifier → Prover</strong>:
+4. Choose challenge $c \leftarrow \mathbb{F}_p$
+5. Send $c$</p><p><strong>Prover → Verifier</strong>:
+6. Compute $s = k + c \cdot x$
+7. Send $s$</p><p><strong>Verification</strong>:
+8. Check: $g^s \stackrel{?}{=} A \cdot y^c$</p></div><input type=radio class=toggle name=tabs-poe-protocol id=tabs-poe-protocol-1>
+<label for=tabs-poe-protocol-1>Non-Interactive</label><div class="book-tabs-content markdown-inner"><p>Using <strong>Fiat-Shamir transformation</strong>:</p><ol><li>Choose random $k \leftarrow \mathbb{F}_p$</li><li>Compute $A = g^k$</li><li>Compute challenge $c = H(A | \text{context})$</li><li>Compute response $s = k + c \cdot x$</li><li>Send proof $(A, s)$</li></ol><p><strong>Verification</strong>:</p><ul><li>Recompute $c = H(A | \text{context})$</li><li>Check: $g^s \stackrel{?}{=} A \cdot y^c$</li></ul></div></div><h3 id=security-properties>Security Properties
+<a class=anchor href=#security-properties>#</a></h3><ul><li><strong>Completeness</strong>: Honest provers always convince verifiers</li><li><strong>Soundness</strong>: Only knowledge of $x$ enables proof generation</li><li><strong>Zero-Knowledge</strong>: Proof reveals no information about $x$</li></ul><hr><h2 id=ped-pedersen-commitment-proofs>PED: Pedersen Commitment Proofs
+<a class=anchor href=#ped-pedersen-commitment-proofs>#</a></h2><p>Proves knowledge of values committed in a Pedersen commitment.</p><h3 id=statement-1>Statement
+<a class=anchor href=#statement-1>#</a></h3><p>Prove knowledge of $b$ and $r$ such that $V = g^b h^r$:</p>$$\pi_{\text{ped}}: \{(g, h, V; b, r) : V = g^b h^r\}$$<p>In Tongo, the &ldquo;left&rdquo; component $L$ of ElGamal encryptions are Pedersen commitments with generators $g$ and $y$.</p><h3 id=protocol>Protocol
+<a class=anchor href=#protocol>#</a></h3><div class=book-tabs><input type=radio class=toggle name=tabs-ped-protocol id=tabs-ped-protocol-0 checked>
+<label for=tabs-ped-protocol-0>Commitment Phase</label><div class="book-tabs-content markdown-inner"><p><strong>Prover</strong>:</p><ol><li>Choose random $k_b, k_r \leftarrow \mathbb{F}_p$</li><li>Compute $A = g^{k_b} h^{k_r}$</li><li>Send $A$</li></ol></div><input type=radio class=toggle name=tabs-ped-protocol id=tabs-ped-protocol-1>
+<label for=tabs-ped-protocol-1>Challenge Phase</label><div class="book-tabs-content markdown-inner"><p><strong>Verifier</strong>:</p><ol><li>Choose challenge $c \leftarrow \mathbb{F}_p$</li><li>Send $c$</li></ol></div><input type=radio class=toggle name=tabs-ped-protocol id=tabs-ped-protocol-2>
+<label for=tabs-ped-protocol-2>Response Phase</label><div class="book-tabs-content markdown-inner"><p><strong>Prover</strong>:</p><ol><li>Compute $s_b = k_b + c \cdot b$</li><li>Compute $s_r = k_r + c \cdot r$</li><li>Send $(s_b, s_r)$</li></ol><p><strong>Verification</strong>:</p><ul><li>Check: $g^{s_b} h^{s_r} \stackrel{?}{=} A \cdot V^c$</li></ul></div></div><h3 id=applications-in-tongo>Applications in Tongo
+<a class=anchor href=#applications-in-tongo>#</a></h3><ul><li>Proving ElGamal left components are well-formed: $L = g^b y^r$</li><li>Validating transfer amount commitments</li><li>Ensuring consistent use of blinding factors across encryptions</li></ul><hr><h2 id=ran-range-proofs>RAN: Range Proofs
+<a class=anchor href=#ran-range-proofs>#</a></h2><p>Proves that a committed value lies within a specific range without revealing the value.</p><h3 id=statement-2>Statement
+<a class=anchor href=#statement-2>#</a></h3><p>Given commitment $V = g^b h^r$, prove $b \in [0, 2^{32})$:</p>$$\pi_{\text{range}}: \{(g, h, V_i, V; b_i, b, r_i, r) : V = g^b h^r \land V = \prod_i V_i^{2^i} \land b_i \in \{0,1\}\}$$<h3 id=bit-decomposition>Bit Decomposition
+<a class=anchor href=#bit-decomposition>#</a></h3><p>The range proof works by decomposing $b$ into 32 bits:</p>$$b = \sum_{i=0}^{31} b_i \cdot 2^i \text{ where } b_i \in \{0, 1\}$$<p>For each bit $b_i$, create a commitment:</p>$$V_i = g^{b_i} h^{r_i}$$<p>The original commitment can be reconstructed:</p>$$V = \prod_{i=0}^{31} V_i^{2^i} = g^{\sum b_i 2^i} h^{\sum r_i 2^i} = g^b h^r$$<p>where $r = \sum_{i=0}^{31} r_i \cdot 2^i$.</p><h3 id=bit-proof-or-protocol>Bit Proof (OR Protocol)
+<a class=anchor href=#bit-proof-or-protocol>#</a></h3><p>Each bit commitment $V_i$ must represent either 0 or 1:</p>$$\pi_{\text{bit}}: \{(g, h, V_i; r_i) : V_i = h^{r_i} \lor V_i/g = h^{r_i}\}$$<p>This is proven using an <strong>OR composition</strong> of two POE protocols:</p><div class=book-tabs><input type=radio class=toggle name=tabs-bit-proof id=tabs-bit-proof-0 checked>
+<label for=tabs-bit-proof-0>Case: b_i = 0</label><div class="book-tabs-content markdown-inner"><p>If $b_i = 0$, then $V_i = h^{r_i}$</p><p><strong>Real Proof</strong>: Prove $V_i = h^{r_i}$ (POE)<br><strong>Simulated Proof</strong>: Simulate $V_i/g = h^{r_i}$ (fake transcript)</p></div><input type=radio class=toggle name=tabs-bit-proof id=tabs-bit-proof-1>
+<label for=tabs-bit-proof-1>Case: b_i = 1</label><div class="book-tabs-content markdown-inner"><p>If $b_i = 1$, then $V_i = g \cdot h^{r_i}$, so $V_i/g = h^{r_i}$</p><p><strong>Real Proof</strong>: Prove $V_i/g = h^{r_i}$ (POE)<br><strong>Simulated Proof</strong>: Simulate $V_i = h^{r_i}$ (fake transcript)</p></div></div><h3 id=or-protocol-details>OR Protocol Details
+<a class=anchor href=#or-protocol-details>#</a></h3><p>The OR protocol allows proving &ldquo;Statement A OR Statement B&rdquo; without revealing which is true:</p><pre tabindex=0><code>Prover (case b_i = 1):
+1. Simulate POE for V_i = h^r_i:
+   - Choose random s_0, c_0
+   - Compute A_0 = h^s_0 / V_i^c_0
+   
+2. Real POE for V_i/g = h^r_i:
+   - Choose random k
+   - Compute A_1 = h^k
+   
+3. Send (A_0, A_1)
 
-  PED: Pedersen Commitments
-  #
+Verifier:
+4. Send challenge c
 
-Prove that V = g^b ⋅ h^r
-Public: g, h, V
-Private: b, r
-Pick k_b, k_r ← 𝔽_p"><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://casiojapi.github.io/tongo-docs-ui/docs/zk-proofs/"><meta property="og:site_name" content="Tongo Protocol"><meta property="og:title" content="ZK Proofs"><meta property="og:description" content="Tongo ZK Proofs # POE: Proof of Exponent # Prove knowledge of x such that y = g^x.
-Public: g, y
-Private: x
-Pick k ← 𝔽_p
-Compute A = g^k
-Verifier sends challenge c
-Prover computes s = k + c⋅x
-Verifier checks: g^s = A ⋅ y^c
-PED: Pedersen Commitments # Prove that V = g^b ⋅ h^r
-Public: g, h, V
-Private: b, r
-Pick k_b, k_r ← 𝔽_p"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="docs"><title>ZK Proofs | Tongo Protocol</title><link rel=icon href=/tongo-docs-ui/favicon.png><link rel=manifest href=/tongo-docs-ui/manifest.json><link rel=canonical href=https://casiojapi.github.io/tongo-docs-ui/docs/zk-proofs/><link rel=stylesheet href=/tongo-docs-ui/book.min.d9fc88ff937439782ae16e0553fa704289d79e4aa3e1452f19754bd4cefdd51c.css integrity="sha256-2fyI/5N0OXgq4W4FU/pwQonXnkqj4UUvGXVL1M791Rw=" crossorigin=anonymous><script defer src=/tongo-docs-ui/fuse.min.js></script><script defer src=/tongo-docs-ui/en.search.min.75a9c703449d48385b3af14ddf36aabfcfe0e06de5b80349db99220971e2cced.js integrity="sha256-danHA0SdSDhbOvFN3zaqv8/g4G3luANJ25kiCXHizO0=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
-<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/tongo-docs-ui/><span>Tongo Protocol</span></a></h2><div class="book-search hidden"><input type=text id=book-search-input placeholder=Search aria-label=Search maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><script>document.querySelector(".book-search").classList.remove("hidden")</script><ul><li><a href=/tongo-docs-ui/docs/encryption/>Encryption</a></li><li><a href=/tongo-docs-ui/docs/transfer/>Transfer</a></li><li><a href=/tongo-docs-ui/docs/auditor/>Viewing Key / Auditor</a></li><li><a href=/tongo-docs-ui/docs/zk-proofs/ class=active>ZK Proofs</a></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/tongo-docs-ui/svg/menu.svg class=book-icon alt=Menu></label><h3>ZK Proofs</h3><label for=toc-control><img src=/tongo-docs-ui/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><a href=#poe-proof-of-exponent>POE: Proof of Exponent</a></li><li><a href=#ped-pedersen-commitments>PED: Pedersen Commitments</a></li><li><a href=#proof-of-range>Proof of Range</a></li></ul></nav></aside></header><article class="markdown book-article"><h1 id=tongo-zk-proofs>Tongo ZK Proofs
-<a class=anchor href=#tongo-zk-proofs>#</a></h1><h2 id=poe-proof-of-exponent>POE: Proof of Exponent
-<a class=anchor href=#poe-proof-of-exponent>#</a></h2><p>Prove knowledge of <code>x</code> such that <code>y = g^x</code>.</p><p>Public: <code>g, y</code><br>Private: <code>x</code></p><p>Pick k ← 𝔽_p</p><p>Compute A = g^k</p><p>Verifier sends challenge c</p><p>Prover computes s = k + c⋅x</p><p>Verifier checks: g^s = A ⋅ y^c</p><h2 id=ped-pedersen-commitments>PED: Pedersen Commitments
-<a class=anchor href=#ped-pedersen-commitments>#</a></h2><p>Prove that <code>V = g^b ⋅ h^r</code></p><p>Public: <code>g, h, V</code><br>Private: <code>b, r</code></p><p>Pick k_b, k_r ← 𝔽_p</p><p>Compute A = g^{k_b} ⋅ h^{k_r}</p><p>Verifier sends challenge c</p><p>Prover computes:
-s_b = k_b + c⋅b
-s_r = k_r + c⋅r</p><p>Verifier checks: g^{s_b} h^{s_r} = A ⋅ V^c</p><h2 id=proof-of-range>Proof of Range
-<a class=anchor href=#proof-of-range>#</a></h2><p>Given <code>V = g^b ⋅ h^r</code>, show that <code>b ∈ [0, 2^32)</code></p><p>Decompose <code>b</code> into bits: <code>b = ∑ b_i ⋅ 2^i</code><br>Commit each bit: <code>V_i = g^{b_i} ⋅ h^{r_i}</code><br>Reconstruct: <code>V = ∏ V_i^{2^i}</code></p><p>Each <code>V_i</code> must be either:</p><ul><li><code>V_i = h^{r_i}</code> (if <code>b_i = 0</code>)</li><li><code>V_i = g ⋅ h^{r_i}</code> (if <code>b_i = 1</code>)</li></ul><p>Prove each with a POE OR proof:</p><p>π_bit: V = h^r OR V/g = h^r</p><p>Use Fiat-Shamir to make all interactive protocols non-interactive by replacing <code>c</code> with <code>H(A)</code></p></article><footer class=book-footer><div class="flex flex-wrap justify-between"><div><a class="flex align-center" href=https://github.com/fatlabsxyz/tongo-docs/edit/master/packages/tongo-docs/content/docs/zk-proofs.md target=_blank rel=noopener><img src=/tongo-docs-ui/svg/edit.svg class=book-icon alt>
-<span>Edit this page</span></a></div></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><a href=#poe-proof-of-exponent>POE: Proof of Exponent</a></li><li><a href=#ped-pedersen-commitments>PED: Pedersen Commitments</a></li><li><a href=#proof-of-range>Proof of Range</a></li></ul></nav></div></aside></main></body></html>
+Prover:
+5. Compute c_1 = c ⊕ c_0  (XOR)
+6. Compute s_1 = k + c_1 * r_i
+7. Send (c_0, s_0, s_1)
+
+Verification:
+8. Check c_1 = c ⊕ c_0
+9. Check h^s_0 = A_0 * V_i^c_0
+10. Check h^s_1 = A_1 * (V_i/g)^c_1
+</code></pre><hr><h2 id=fiat-shamir-transformation>Fiat-Shamir Transformation
+<a class=anchor href=#fiat-shamir-transformation>#</a></h2><p>All interactive protocols are made non-interactive using the Fiat-Shamir heuristic:</p><h3 id=challenge-generation>Challenge Generation
+<a class=anchor href=#challenge-generation>#</a></h3><p>Instead of receiving challenges from a verifier, compute:</p>$$c = H(\text{transcript} \| \text{context})$$<h3 id=context-binding>Context Binding
+<a class=anchor href=#context-binding>#</a></h3><p>The hash includes transaction-specific data for security:</p><ul><li>Chain ID</li><li>Contract address</li><li>Function selector</li><li>User nonce</li><li>Relevant public inputs</li></ul><p>This prevents:</p><ul><li><strong>Replay attacks</strong>: Proofs are bound to specific transactions</li><li><strong>Cross-context attacks</strong>: Proofs can&rsquo;t be reused in different contexts</li><li><strong>Malleability</strong>: Proofs can&rsquo;t be modified or forged</li></ul><h3 id=example-context-hash>Example Context Hash
+<a class=anchor href=#example-context-hash>#</a></h3><pre tabindex=0><code class=language-cairo data-lang=cairo>let context = hash_chain([
+    chain_id,
+    contract_address, 
+    selector,
+    user_nonce,
+    public_inputs...
+]);
+
+let challenge = hash_chain([
+    commitment_A,
+    context
+]);
+</code></pre><hr><h2 id=proof-composition>Proof Composition
+<a class=anchor href=#proof-composition>#</a></h2><p>Complex operations combine multiple proof primitives:</p><h3 id=fund-proof>Fund Proof
+<a class=anchor href=#fund-proof>#</a></h3>$$\pi_{\text{fund}}: \{(g, y, b; x) : y = g^x\}$$<ul><li><strong>Components</strong>: 1 POE proof</li><li><strong>Purpose</strong>: Prove ownership of public key</li></ul><h3 id=transfer-proof>Transfer Proof
+<a class=anchor href=#transfer-proof>#</a></h3>$$\pi_{\text{transfer}}: \{(g, y_s, y_r, L_0, R_0, L_s, L_r, R; x, b, b', r) : \ldots\}$$<ul><li><strong>Components</strong>: 3 POE + 3 PED + 2 RAN proofs</li><li><strong>Purpose</strong>: Prove valid confidential transfer</li></ul><h3 id=withdraw-proof>Withdraw Proof
+<a class=anchor href=#withdraw-proof>#</a></h3>$$\pi_{\text{withdraw}}: \{(g, y, R, L, b; b', x) : \ldots\}$$<ul><li><strong>Components</strong>: 2 POE + 1 RAN proof</li><li><strong>Purpose</strong>: Prove valid balance withdrawal</li></ul><hr><h2 id=performance-analysis>Performance Analysis
+<a class=anchor href=#performance-analysis>#</a></h2><table><thead><tr><th>Proof Type</th><th>Components</th><th>Approx. Cost</th></tr></thead><tbody><tr><td>POE</td><td>1 scalar mult + 1 verification</td><td>~3K steps</td></tr><tr><td>PED</td><td>2 scalar mults + 1 verification</td><td>~5K steps</td></tr><tr><td>RAN (32-bit)</td><td>32 OR proofs + reconstruction</td><td>~35K steps</td></tr></tbody></table><h3 id=transfer-cost-breakdown>Transfer Cost Breakdown
+<a class=anchor href=#transfer-cost-breakdown>#</a></h3><ul><li><strong>Ownership POE</strong>: ~3K steps</li><li><strong>Blinding POE</strong>: ~3K steps</li><li><strong>3× PED proofs</strong>: ~15K steps</li><li><strong>2× Range proofs</strong>: ~70K steps</li><li><strong>Contract logic</strong>: ~5K steps</li><li><strong>Total</strong>: ~100K steps (optimized implementation)</li></ul><h3 id=future-optimizations>Future Optimizations
+<a class=anchor href=#future-optimizations>#</a></h3><ul><li><strong>Bulletproofs</strong>: More efficient range proofs (~10K steps for 32-bit)</li><li><strong>Batch verification</strong>: Parallel proof verification</li><li><strong>Precomputed tables</strong>: Faster scalar multiplication</li></ul></article><footer class=book-footer><div class="flex flex-wrap justify-between"><div><a class="flex align-center" href=https://github.com/fatlabsxyz/tongo-docs/edit/master/packages/tongo-docs/content/docs/zk-proofs.md target=_blank rel=noopener><img src=/svg/edit.svg class=book-icon alt>
+<span>Edit this page</span></a></div></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><a href=#proof-primitives>Proof Primitives</a></li><li><a href=#poe-proof-of-exponent>POE: Proof of Exponent</a><ul><li><a href=#statement>Statement</a></li><li><a href=#sigma-protocol>Sigma Protocol</a></li><li><a href=#security-properties>Security Properties</a></li></ul></li><li><a href=#ped-pedersen-commitment-proofs>PED: Pedersen Commitment Proofs</a><ul><li><a href=#statement-1>Statement</a></li><li><a href=#protocol>Protocol</a></li><li><a href=#applications-in-tongo>Applications in Tongo</a></li></ul></li><li><a href=#ran-range-proofs>RAN: Range Proofs</a><ul><li><a href=#statement-2>Statement</a></li><li><a href=#bit-decomposition>Bit Decomposition</a></li><li><a href=#bit-proof-or-protocol>Bit Proof (OR Protocol)</a></li><li><a href=#or-protocol-details>OR Protocol Details</a></li></ul></li><li><a href=#fiat-shamir-transformation>Fiat-Shamir Transformation</a><ul><li><a href=#challenge-generation>Challenge Generation</a></li><li><a href=#context-binding>Context Binding</a></li><li><a href=#example-context-hash>Example Context Hash</a></li></ul></li><li><a href=#proof-composition>Proof Composition</a><ul><li><a href=#fund-proof>Fund Proof</a></li><li><a href=#transfer-proof>Transfer Proof</a></li><li><a href=#withdraw-proof>Withdraw Proof</a></li></ul></li><li><a href=#performance-analysis>Performance Analysis</a><ul><li><a href=#transfer-cost-breakdown>Transfer Cost Breakdown</a></li><li><a href=#future-optimizations>Future Optimizations</a></li></ul></li></ul></nav></div></aside></main></body></html>

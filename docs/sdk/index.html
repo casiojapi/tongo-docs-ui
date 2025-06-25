@@ -1,0 +1,363 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="
+  SDK Documentation
+  #
+
+The Tongo TypeScript SDK provides a comprehensive interface for building confidential payment applications on Starknet. It handles key management, encryption, proof generation, and transaction serialization.
+
+  Installation
+  #
+
+npm install tongo-sdk
+# or
+yarn add tongo-sdk
+
+  Architecture
+  #
+
+The SDK consists of two main components:
+
+  Starknet Homomorphic Encryption (SHE)
+  #
+
+Low-level cryptographic primitives for ElGamal encryption and ZK proof generation over the Stark curve."><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://docs.tongo.cash/docs/sdk/"><meta property="og:site_name" content="Tongo Protocol"><meta property="og:title" content="SDK Documentation"><meta property="og:description" content="SDK Documentation # The Tongo TypeScript SDK provides a comprehensive interface for building confidential payment applications on Starknet. It handles key management, encryption, proof generation, and transaction serialization.
+Installation # npm install tongo-sdk # or yarn add tongo-sdk Architecture # The SDK consists of two main components:
+Starknet Homomorphic Encryption (SHE) # Low-level cryptographic primitives for ElGamal encryption and ZK proof generation over the Stark curve."><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="docs"><title>SDK Documentation | Tongo Protocol</title><link rel=icon href=/favicon.png><link rel=manifest href=/manifest.json><link rel=canonical href=https://docs.tongo.cash/docs/sdk/><link rel=stylesheet href=/book.min.a3621cc5553a2d3e6c1eef6158eab15d0c78037147ea50c2b0cc1400e7b455c5.css integrity="sha256-o2IcxVU6LT5sHu9hWOqxXQx4A3FH6lDCsMwUAOe0VcU=" crossorigin=anonymous><script defer src=/fuse.min.js></script><script defer src=/en.search.min.f638ad1f04431c5b01b2701c0a28e77eeebeee90e0dd56137e0021af744964d2.js integrity="sha256-9jitHwRDHFsBsnAcCijnfu6+7pDg3VYTfgAhr3RJZNI=" crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js onload=renderMathInElement(document.body)></script><script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:!0},{left:"$$",right:"$$",display:!0},{left:"\\(",right:"\\)",display:!1}],throwOnError:!1})})</script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>Tongo Protocol</span></a></h2><div class="book-search hidden"><input type=text id=book-search-input placeholder=Search aria-label=Search maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><script>document.querySelector(".book-search").classList.remove("hidden")</script><ul><li><a href=/docs/intro-to-tongo/>Introduction</a></li><li><a href=/docs/encryption/>Encryption System</a></li><li><a href=/docs/transfer/>Transfer Protocol</a></li><li><a href=/docs/zk-proofs/>Zero-Knowledge Proof System</a></li><li><a href=/docs/auditor/>Auditing & Compliance</a></li><li><a href=/docs/sdk/ class=active>SDK Documentation</a></li><li><a href=/docs/contracts/>Cairo Contracts</a></li><li><a href=/docs/she/>SHE Library</a></li><li><a href=/docs/tongo-sdk/>TypeScript SDK</a></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label><h3>SDK Documentation</h3><label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><a href=#installation>Installation</a></li><li><a href=#architecture>Architecture</a><ul><li><a href=#starknet-homomorphic-encryption-she>Starknet Homomorphic Encryption (SHE)</a></li><li><a href=#tongo-sdk>Tongo SDK</a></li></ul></li><li><a href=#quick-start>Quick Start</a><ul><li><a href=#basic-usage>Basic Usage</a></li><li><a href=#fund-account>Fund Account</a></li><li><a href=#transfer-tokens>Transfer Tokens</a></li><li><a href=#check-balance>Check Balance</a></li></ul></li><li><a href=#api-reference>API Reference</a><ul><li><a href=#account-class>Account Class</a></li></ul></li><li><a href=#operation-objects>Operation Objects</a><ul><li><a href=#fundoperation>FundOperation</a></li><li><a href=#transferoperation>TransferOperation</a></li></ul></li><li><a href=#advanced-features>Advanced Features</a><ul><li><a href=#custom-proving>Custom Proving</a></li><li><a href=#key-derivation>Key Derivation</a></li><li><a href=#balance-recovery>Balance Recovery</a></li></ul></li><li><a href=#integration-examples>Integration Examples</a><ul><li><a href=#wallet-integration>Wallet Integration</a></li><li><a href=#relayer-service>Relayer Service</a></li><li><a href=#defi-integration>DeFi Integration</a></li></ul></li><li><a href=#error-handling>Error Handling</a></li><li><a href=#performance-considerations>Performance Considerations</a><ul><li><a href=#proof-generation>Proof Generation</a></li><li><a href=#balance-decryption>Balance Decryption</a></li><li><a href=#memory-usage>Memory Usage</a></li></ul></li><li><a href=#typescript-types>TypeScript Types</a></li></ul></nav></aside></header><article class="markdown book-article"><h1 id=sdk-documentation>SDK Documentation
+<a class=anchor href=#sdk-documentation>#</a></h1><p>The Tongo TypeScript SDK provides a comprehensive interface for building confidential payment applications on Starknet. It handles key management, encryption, proof generation, and transaction serialization.</p><h2 id=installation>Installation
+<a class=anchor href=#installation>#</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>npm install tongo-sdk
+</span></span><span style=display:flex><span><span style=color:#75715e># or</span>
+</span></span><span style=display:flex><span>yarn add tongo-sdk
+</span></span></code></pre></div><h2 id=architecture>Architecture
+<a class=anchor href=#architecture>#</a></h2><p>The SDK consists of two main components:</p><h3 id=starknet-homomorphic-encryption-she>Starknet Homomorphic Encryption (SHE)
+<a class=anchor href=#starknet-homomorphic-encryption-she>#</a></h3><p>Low-level cryptographic primitives for ElGamal encryption and ZK proof generation over the Stark curve.</p><h3 id=tongo-sdk>Tongo SDK
+<a class=anchor href=#tongo-sdk>#</a></h3><p>High-level application interface that abstracts away cryptographic complexity and provides a clean API for wallet integrations.</p><hr><h2 id=quick-start>Quick Start
+<a class=anchor href=#quick-start>#</a></h2><h3 id=basic-usage>Basic Usage
+<a class=anchor href=#basic-usage>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>Account</span>, <span style=color:#a6e22e>utils</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;tongo-sdk&#34;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Generate a new private key
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>secret</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>utils</span>.<span style=color:#a6e22e>generatePrivateKey</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Create account instance
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>account</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Account</span>(<span style=color:#a6e22e>secret</span>, <span style=color:#e6db74>&#34;0x123...tongoContractAddress&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#e6db74>&#34;Public Key:&#34;</span>, <span style=color:#a6e22e>account</span>.<span style=color:#a6e22e>prettyPublicKey</span>());
+</span></span><span style=display:flex><span><span style=color:#75715e>// Output: Um6QEVHZaXkii8hWzayJf6PBWrJCTuJomAst75Zmy12
+</span></span></span></code></pre></div><h3 id=fund-account>Fund Account
+<a class=anchor href=#fund-account>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#75715e>// Fund account with 1000 tokens
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>fundOperation</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>account</span>.<span style=color:#a6e22e>fund</span>(<span style=color:#ae81ff>1000</span><span style=color:#a6e22e>n</span>, { <span style=color:#a6e22e>approval</span>: <span style=color:#66d9ef>true</span> });
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Get serialized transaction data
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>callData</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>fundOperation</span>.<span style=color:#a6e22e>toCallData</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Execute with any Starknet signer
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>tx</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> <span style=color:#a6e22e>signer</span>.<span style=color:#a6e22e>execute</span>([<span style=color:#a6e22e>callData</span>]);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>await</span> <span style=color:#a6e22e>provider</span>.<span style=color:#a6e22e>waitForTransaction</span>(<span style=color:#a6e22e>tx</span>.<span style=color:#a6e22e>transaction_hash</span>);
+</span></span></code></pre></div><h3 id=transfer-tokens>Transfer Tokens
+<a class=anchor href=#transfer-tokens>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#75715e>// Create confidential transfer
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>transferOperation</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>account</span>.<span style=color:#a6e22e>transfer</span>({
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>to</span>: <span style=color:#66d9ef>receiverPubKey</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>amount</span>: <span style=color:#66d9ef>100n</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>viewKeys</span><span style=color:#f92672>:</span> [<span style=color:#a6e22e>auditorPubKey</span>] <span style=color:#75715e>// Optional viewing keys
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Submit transaction
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>callData</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>transferOperation</span>.<span style=color:#a6e22e>toCallData</span>();
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>tx</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> <span style=color:#a6e22e>signer</span>.<span style=color:#a6e22e>execute</span>([<span style=color:#a6e22e>callData</span>]);
+</span></span></code></pre></div><h3 id=check-balance>Check Balance
+<a class=anchor href=#check-balance>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#75715e>// Get encrypted balance
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>encryptedBalance</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>account</span>.<span style=color:#a6e22e>balance</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Decrypt balance (brute force in range)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>actualBalance</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>account</span>.<span style=color:#a6e22e>decryptBalance</span>(<span style=color:#ae81ff>0</span><span style=color:#a6e22e>n</span>, <span style=color:#ae81ff>1000000</span><span style=color:#a6e22e>n</span>);
+</span></span><span style=display:flex><span><span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#e6db74>&#34;Balance:&#34;</span>, <span style=color:#a6e22e>actualBalance</span>);
+</span></span></code></pre></div><hr><h2 id=api-reference>API Reference
+<a class=anchor href=#api-reference>#</a></h2><h3 id=account-class>Account Class
+<a class=anchor href=#account-class>#</a></h3><p>The main abstraction for interacting with Tongo accounts.</p><h4 id=constructor>Constructor
+<a class=anchor href=#constructor>#</a></h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>constructor</span>(
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>secret</span>: <span style=color:#66d9ef>bigint</span> <span style=color:#f92672>|</span> <span style=color:#a6e22e>Uint8Array</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>tongoAddress</span>: <span style=color:#66d9ef>string</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>options</span><span style=color:#f92672>?:</span> {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>signer?</span>: <span style=color:#66d9ef>Signer</span>,
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>provider?</span>: <span style=color:#66d9ef>Provider</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>)
+</span></span></code></pre></div><p><strong>Parameters:</strong></p><ul><li><code>secret</code>: Private key as bigint or byte array</li><li><code>tongoAddress</code>: Deployed Tongo contract address</li><li><code>options.signer</code>: Optional Starknet signer for automatic transaction submission</li><li><code>options.provider</code>: Optional Starknet provider for balance queries</li></ul><h4 id=key-management>Key Management
+<a class=anchor href=#key-management>#</a></h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#75715e>// Get public key as coordinate pair
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>publicKey</span>()<span style=color:#f92672>:</span> [<span style=color:#66d9ef>bigint</span>, <span style=color:#66d9ef>bigint</span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Get base58-encoded public key string  
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>prettyPublicKey</span>()<span style=color:#f92672>:</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Get current account nonce
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>nonce</span>()<span style=color:#f92672>:</span> <span style=color:#a6e22e>Promise</span>&lt;<span style=color:#f92672>number</span>&gt;
+</span></span></code></pre></div><h4 id=balance-operations>Balance Operations
+<a class=anchor href=#balance-operations>#</a></h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#75715e>// Get encrypted balance from contract
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>balance</span>()<span style=color:#f92672>:</span> <span style=color:#a6e22e>Promise</span>&lt;<span style=color:#f92672>CipherBalance</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Get encrypted pending balance
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>pending</span>()<span style=color:#f92672>:</span> <span style=color:#a6e22e>Promise</span>&lt;<span style=color:#f92672>CipherBalance</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Decrypt balance in specified range
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>decryptBalance</span>(<span style=color:#a6e22e>lowBound</span>: <span style=color:#66d9ef>bigint</span>, <span style=color:#a6e22e>highBound</span>: <span style=color:#66d9ef>bigint</span>)<span style=color:#f92672>:</span> <span style=color:#a6e22e>Promise</span>&lt;<span style=color:#f92672>bigint</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Decrypt pending balance in specified range  
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>decryptPending</span>(<span style=color:#a6e22e>lowBound</span>: <span style=color:#66d9ef>bigint</span>, <span style=color:#a6e22e>highBound</span>: <span style=color:#66d9ef>bigint</span>)<span style=color:#f92672>:</span> <span style=color:#a6e22e>Promise</span>&lt;<span style=color:#f92672>bigint</span>&gt;
+</span></span></code></pre></div><h4 id=transaction-operations>Transaction Operations
+<a class=anchor href=#transaction-operations>#</a></h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#75715e>// Fund account with ERC20 tokens
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>fund</span>(
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>amount</span>: <span style=color:#66d9ef>bigint</span>, 
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>options</span><span style=color:#f92672>:</span> { <span style=color:#a6e22e>approval</span>: <span style=color:#66d9ef>boolean</span> }
+</span></span><span style=display:flex><span>)<span style=color:#f92672>:</span> <span style=color:#a6e22e>FundOperation</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Transfer tokens to another account
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>transfer</span>(<span style=color:#a6e22e>params</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>to</span>: <span style=color:#66d9ef>PubKey</span> <span style=color:#f92672>|</span> <span style=color:#66d9ef>string</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>amount</span>: <span style=color:#66d9ef>bigint</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>viewKeys</span><span style=color:#f92672>?:</span> (<span style=color:#a6e22e>PubKey</span> <span style=color:#f92672>|</span> <span style=color:#66d9ef>string</span>)[]
+</span></span><span style=display:flex><span>}, <span style=color:#a6e22e>options</span><span style=color:#f92672>?:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>pending</span><span style=color:#f92672>?:</span> [<span style=color:#66d9ef>bigint</span>, <span style=color:#66d9ef>bigint</span>] <span style=color:#75715e>// Manual pending balance override
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>})<span style=color:#f92672>:</span> <span style=color:#a6e22e>TransferOperation</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Transfer with relayer fee
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>transferWithFee</span>(<span style=color:#a6e22e>params</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>to</span>: <span style=color:#66d9ef>PubKey</span> <span style=color:#f92672>|</span> <span style=color:#66d9ef>string</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>amount</span>: <span style=color:#66d9ef>bigint</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>feeReceiver</span>: <span style=color:#66d9ef>PubKey</span> <span style=color:#f92672>|</span> <span style=color:#66d9ef>string</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>feeAmount</span>: <span style=color:#66d9ef>bigint</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>viewKeys</span><span style=color:#f92672>?:</span> (<span style=color:#a6e22e>PubKey</span> <span style=color:#f92672>|</span> <span style=color:#66d9ef>string</span>)[]
+</span></span><span style=display:flex><span>})<span style=color:#f92672>:</span> <span style=color:#a6e22e>TransferWithFeeOperation</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Merge pending transfers into main balance
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>rollover</span>()<span style=color:#f92672>:</span> <span style=color:#a6e22e>RolloverOperation</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Withdraw tokens back to ERC20
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>withdraw</span>(<span style=color:#a6e22e>params</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>to</span>: <span style=color:#66d9ef>string</span>, <span style=color:#75715e>// Starknet address
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>amount</span>: <span style=color:#66d9ef>bigint</span>
+</span></span><span style=display:flex><span>})<span style=color:#f92672>:</span> <span style=color:#a6e22e>WithdrawOperation</span>
+</span></span></code></pre></div><hr><h2 id=operation-objects>Operation Objects
+<a class=anchor href=#operation-objects>#</a></h2><p>All transaction methods return operation objects that can be serialized to transaction data:</p><h3 id=fundoperation>FundOperation
+<a class=anchor href=#fundoperation>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>FundOperation</span> {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Serialize to Starknet transaction calls
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>toCallData</span>()<span style=color:#f92672>:</span> <span style=color:#a6e22e>Call</span>[]
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Get proof components
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>getProof</span>()<span style=color:#f92672>:</span> <span style=color:#a6e22e>ProofOfOwnership</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Get operation metadata
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>getMetadata</span>()<span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>amount</span>: <span style=color:#66d9ef>bigint</span>,
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>recipient</span>: <span style=color:#66d9ef>PubKey</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=transferoperation>TransferOperation
+<a class=anchor href=#transferoperation>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>TransferOperation</span> {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Serialize to Starknet transaction calls
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>toCallData</span>()<span style=color:#f92672>:</span> <span style=color:#a6e22e>Call</span>[]
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Get all proof components
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>getProof</span>()<span style=color:#f92672>:</span> <span style=color:#a6e22e>ProofOfTransfer</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Get encrypted components
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>getCiphertexts</span>()<span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>sender</span>: <span style=color:#66d9ef>CipherBalance</span>,
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>receiver</span>: <span style=color:#66d9ef>CipherBalance</span>,
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>auditor?</span>: <span style=color:#66d9ef>CipherBalance</span>,
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>viewKeys</span>: <span style=color:#66d9ef>Array</span><span style=color:#f92672>&lt;</span>{ <span style=color:#a6e22e>pubkey</span>: <span style=color:#66d9ef>PubKey</span>, <span style=color:#a6e22e>cipher</span>: <span style=color:#66d9ef>StarkPoint</span> }<span style=color:#f92672>&gt;</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Get operation metadata
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>getMetadata</span>()<span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>from</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>PubKey</span>,
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>to</span>: <span style=color:#66d9ef>PubKey</span>,
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>amount</span>: <span style=color:#66d9ef>bigint</span>,
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>viewKeys</span>: <span style=color:#66d9ef>PubKey</span>[]
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><hr><h2 id=advanced-features>Advanced Features
+<a class=anchor href=#advanced-features>#</a></h2><h3 id=custom-proving>Custom Proving
+<a class=anchor href=#custom-proving>#</a></h3><p>For advanced use cases, you can generate proofs manually:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>SHE</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;tongo-sdk&#34;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Generate proof of exponent
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>poeProof</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>SHE</span>.<span style=color:#a6e22e>proveExponent</span>({
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>generator</span>: <span style=color:#66d9ef>g</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>publicKey</span>: <span style=color:#66d9ef>y</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>secret</span>: <span style=color:#66d9ef>x</span>
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Generate Pedersen commitment proof
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>pedProof</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>SHE</span>.<span style=color:#a6e22e>provePedersen</span>({
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>generators</span><span style=color:#f92672>:</span> [<span style=color:#a6e22e>g</span>, <span style=color:#a6e22e>h</span>],
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>commitment</span>: <span style=color:#66d9ef>V</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>value</span>: <span style=color:#66d9ef>b</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>randomness</span>: <span style=color:#66d9ef>r</span>
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Generate range proof
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>rangeProof</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>SHE</span>.<span style=color:#a6e22e>proveRange</span>({
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>commitment</span>: <span style=color:#66d9ef>V</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>value</span>: <span style=color:#66d9ef>b</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>randomness</span>: <span style=color:#66d9ef>r</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>bitLength</span>: <span style=color:#66d9ef>32</span>
+</span></span><span style=display:flex><span>});
+</span></span></code></pre></div><h3 id=key-derivation>Key Derivation
+<a class=anchor href=#key-derivation>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>utils</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;tongo-sdk&#34;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Generate key from mnemonic
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>secret</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>utils</span>.<span style=color:#a6e22e>keyFromMnemonic</span>(
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about&#34;</span>
+</span></span><span style=display:flex><span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Generate key from seed
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>secret2</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>utils</span>.<span style=color:#a6e22e>keyFromSeed</span>(<span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Uint8Array</span>(<span style=color:#ae81ff>32</span>));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Convert between formats
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>pubkey</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>utils</span>.<span style=color:#a6e22e>publicKeyFromSecret</span>(<span style=color:#a6e22e>secret</span>);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>address</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>utils</span>.<span style=color:#a6e22e>addressFromPubkey</span>(<span style=color:#a6e22e>pubkey</span>);
+</span></span></code></pre></div><h3 id=balance-recovery>Balance Recovery
+<a class=anchor href=#balance-recovery>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#75715e>// Fast balance recovery using symmetric encryption
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>symKey</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>account</span>.<span style=color:#a6e22e>deriveSymmetricKey</span>();
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>encryptedBalance</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> <span style=color:#a6e22e>account</span>.<span style=color:#a6e22e>getSymmetricBalance</span>();
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>balance</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>utils</span>.<span style=color:#a6e22e>decryptSymmetric</span>(<span style=color:#a6e22e>encryptedBalance</span>, <span style=color:#a6e22e>symKey</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Store encrypted balance for later recovery
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>await</span> <span style=color:#a6e22e>account</span>.<span style=color:#a6e22e>storeSymmetricBalance</span>(<span style=color:#a6e22e>balance</span>);
+</span></span></code></pre></div><hr><h2 id=integration-examples>Integration Examples
+<a class=anchor href=#integration-examples>#</a></h2><h3 id=wallet-integration>Wallet Integration
+<a class=anchor href=#wallet-integration>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TongoWallet</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#a6e22e>account</span>: <span style=color:#66d9ef>Account</span>;
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>constructor</span>(<span style=color:#a6e22e>secret</span>: <span style=color:#66d9ef>bigint</span>, <span style=color:#a6e22e>tongoAddress</span>: <span style=color:#66d9ef>string</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>account</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Account</span>(<span style=color:#a6e22e>secret</span>, <span style=color:#a6e22e>tongoAddress</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>async</span> <span style=color:#a6e22e>getBalance</span>()<span style=color:#f92672>:</span> <span style=color:#a6e22e>Promise</span>&lt;<span style=color:#f92672>bigint</span>&gt; {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>account</span>.<span style=color:#a6e22e>decryptBalance</span>(<span style=color:#ae81ff>0</span><span style=color:#a6e22e>n</span>, <span style=color:#ae81ff>2</span><span style=color:#a6e22e>n</span> <span style=color:#f92672>**</span> <span style=color:#ae81ff>32</span><span style=color:#a6e22e>n</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>async</span> <span style=color:#a6e22e>send</span>(<span style=color:#a6e22e>to</span>: <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>amount</span>: <span style=color:#66d9ef>bigint</span>)<span style=color:#f92672>:</span> <span style=color:#a6e22e>Promise</span>&lt;<span style=color:#f92672>string</span>&gt; {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>operation</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>account</span>.<span style=color:#a6e22e>transfer</span>({ <span style=color:#a6e22e>to</span>, <span style=color:#a6e22e>amount</span> });
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>tx</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>signer</span>.<span style=color:#a6e22e>execute</span>(<span style=color:#a6e22e>operation</span>.<span style=color:#a6e22e>toCallData</span>());
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>tx</span>.<span style=color:#a6e22e>transaction_hash</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>async</span> <span style=color:#a6e22e>receive</span>()<span style=color:#f92672>:</span> <span style=color:#a6e22e>Promise</span>&lt;<span style=color:#f92672>void</span>&gt; {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>rollover</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>account</span>.<span style=color:#a6e22e>rollover</span>();
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>await</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>signer</span>.<span style=color:#a6e22e>execute</span>(<span style=color:#a6e22e>rollover</span>.<span style=color:#a6e22e>toCallData</span>());
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=relayer-service>Relayer Service
+<a class=anchor href=#relayer-service>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TongoRelayer</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>constructor</span>(<span style=color:#66d9ef>private</span> <span style=color:#a6e22e>relayerAccount</span>: <span style=color:#66d9ef>Account</span>) {}
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>async</span> <span style=color:#a6e22e>relayTransfer</span>(
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>userTransfer</span>: <span style=color:#66d9ef>TransferOperation</span>,
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>feeAmount</span>: <span style=color:#66d9ef>bigint</span>
+</span></span><span style=display:flex><span>    )<span style=color:#f92672>:</span> <span style=color:#a6e22e>Promise</span>&lt;<span style=color:#f92672>string</span>&gt; {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Verify user&#39;s transfer is valid
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>isValid</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>validateTransfer</span>(<span style=color:#a6e22e>userTransfer</span>);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span><span style=color:#a6e22e>isValid</span>) <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> Error(<span style=color:#e6db74>&#34;Invalid transfer&#34;</span>);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Create relayer fee transfer
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>feeTransfer</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>relayerAccount</span>.<span style=color:#a6e22e>transfer</span>({
+</span></span><span style=display:flex><span>            <span style=color:#a6e22e>to</span>: <span style=color:#66d9ef>this.relayerAccount.publicKey</span>(),
+</span></span><span style=display:flex><span>            <span style=color:#a6e22e>amount</span>: <span style=color:#66d9ef>feeAmount</span>
+</span></span><span style=display:flex><span>        });
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Bundle transfers
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>calls</span> <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>            ...<span style=color:#a6e22e>userTransfer</span>.<span style=color:#a6e22e>toCallData</span>(),
+</span></span><span style=display:flex><span>            ...<span style=color:#a6e22e>feeTransfer</span>.<span style=color:#a6e22e>toCallData</span>()
+</span></span><span style=display:flex><span>        ];
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Execute as relayer
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>tx</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>relayerSigner</span>.<span style=color:#a6e22e>execute</span>(<span style=color:#a6e22e>calls</span>);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>tx</span>.<span style=color:#a6e22e>transaction_hash</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=defi-integration>DeFi Integration
+<a class=anchor href=#defi-integration>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TongoDeFi</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>constructor</span>(
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>private</span> <span style=color:#a6e22e>tongoAddress</span>: <span style=color:#66d9ef>string</span>,
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>private</span> <span style=color:#a6e22e>poolAddress</span>: <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>    ) {}
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>async</span> <span style=color:#a6e22e>addLiquidity</span>(
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>account</span>: <span style=color:#66d9ef>Account</span>,
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>tongoAmount</span>: <span style=color:#66d9ef>bigint</span>,
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>tokenAmount</span>: <span style=color:#66d9ef>bigint</span>
+</span></span><span style=display:flex><span>    )<span style=color:#f92672>:</span> <span style=color:#a6e22e>Promise</span>&lt;<span style=color:#f92672>string</span>&gt; {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Withdraw Tongo tokens to regular ERC20
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>withdraw</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>account</span>.<span style=color:#a6e22e>withdraw</span>({
+</span></span><span style=display:flex><span>            <span style=color:#a6e22e>to</span>: <span style=color:#66d9ef>this.poolAddress</span>,
+</span></span><span style=display:flex><span>            <span style=color:#a6e22e>amount</span>: <span style=color:#66d9ef>tongoAmount</span>
+</span></span><span style=display:flex><span>        });
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Add liquidity to AMM pool
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>addLiquidity</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>createAddLiquidityCall</span>(
+</span></span><span style=display:flex><span>            <span style=color:#a6e22e>tongoAmount</span>,
+</span></span><span style=display:flex><span>            <span style=color:#a6e22e>tokenAmount</span>
+</span></span><span style=display:flex><span>        );
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Execute atomically
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>calls</span> <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>            ...<span style=color:#a6e22e>withdraw</span>.<span style=color:#a6e22e>toCallData</span>(),
+</span></span><span style=display:flex><span>            <span style=color:#a6e22e>addLiquidity</span>
+</span></span><span style=display:flex><span>        ];
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>tx</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>signer</span>.<span style=color:#a6e22e>execute</span>(<span style=color:#a6e22e>calls</span>);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>tx</span>.<span style=color:#a6e22e>transaction_hash</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><hr><h2 id=error-handling>Error Handling
+<a class=anchor href=#error-handling>#</a></h2><p>The SDK provides comprehensive error types:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>TongoError</span>, <span style=color:#a6e22e>ProofError</span>, <span style=color:#a6e22e>EncryptionError</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;tongo-sdk&#34;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>transfer</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>account</span>.<span style=color:#a6e22e>transfer</span>({ <span style=color:#a6e22e>to</span>: <span style=color:#66d9ef>recipient</span>, <span style=color:#a6e22e>amount</span>: <span style=color:#66d9ef>1000n</span> });
+</span></span><span style=display:flex><span>} <span style=color:#66d9ef>catch</span> (<span style=color:#a6e22e>error</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>error</span> <span style=color:#66d9ef>instanceof</span> <span style=color:#a6e22e>ProofError</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;Failed to generate proof:&#34;</span>, <span style=color:#a6e22e>error</span>.<span style=color:#a6e22e>message</span>);
+</span></span><span style=display:flex><span>    } <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>error</span> <span style=color:#66d9ef>instanceof</span> <span style=color:#a6e22e>EncryptionError</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;Encryption failed:&#34;</span>, <span style=color:#a6e22e>error</span>.<span style=color:#a6e22e>message</span>);
+</span></span><span style=display:flex><span>    } <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>error</span> <span style=color:#66d9ef>instanceof</span> <span style=color:#a6e22e>TongoError</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;Tongo operation failed:&#34;</span>, <span style=color:#a6e22e>error</span>.<span style=color:#a6e22e>message</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=performance-considerations>Performance Considerations
+<a class=anchor href=#performance-considerations>#</a></h2><h3 id=proof-generation>Proof Generation
+<a class=anchor href=#proof-generation>#</a></h3><ul><li>Range proofs are the most expensive component (~2-5 seconds)</li><li>Consider using web workers for proof generation</li><li>Cache public parameters to reduce initialization time</li></ul><h3 id=balance-decryption>Balance Decryption
+<a class=anchor href=#balance-decryption>#</a></h3><ul><li>Brute force decryption time scales with balance range</li><li>Use reasonable bounds based on expected balance size</li><li>Consider symmetric balance storage for instant recovery</li></ul><h3 id=memory-usage>Memory Usage
+<a class=anchor href=#memory-usage>#</a></h3><ul><li>Each account maintains minimal state (~1KB)</li><li>Proof generation requires temporary memory (~10MB)</li><li>Consider cleanup after proof generation in resource-constrained environments</li></ul><hr><h2 id=typescript-types>TypeScript Types
+<a class=anchor href=#typescript-types>#</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#75715e>// Core types
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>PubKey</span> <span style=color:#f92672>=</span> [<span style=color:#66d9ef>bigint</span>, <span style=color:#66d9ef>bigint</span>];
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>StarkPoint</span> <span style=color:#f92672>=</span> [<span style=color:#66d9ef>bigint</span>, <span style=color:#66d9ef>bigint</span>];
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>CipherBalance</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>CL</span>: <span style=color:#66d9ef>StarkPoint</span>;
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>CR</span>: <span style=color:#66d9ef>StarkPoint</span>;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>ProofOfOwnership</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>A</span>: <span style=color:#66d9ef>StarkPoint</span>;
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>s</span>: <span style=color:#66d9ef>bigint</span>;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>ProofOfTransfer</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>ownership</span>: <span style=color:#66d9ef>ProofOfOwnership</span>;
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>blinding</span>: <span style=color:#66d9ef>ProofOfOwnership</span>;
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>senderPed</span>: <span style=color:#66d9ef>ProofOfPedersen</span>;
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>receiverPed</span>: <span style=color:#66d9ef>ProofOfPedersen</span>;
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>auditorPed?</span>: <span style=color:#66d9ef>ProofOfPedersen</span>;
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>amountRange</span>: <span style=color:#66d9ef>ProofOfRange</span>;
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>remainingRange</span>: <span style=color:#66d9ef>ProofOfRange</span>;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Operation result types
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>Call</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>contractAddress</span>: <span style=color:#66d9ef>string</span>;
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>entrypoint</span>: <span style=color:#66d9ef>string</span>;
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>calldata</span>: <span style=color:#66d9ef>bigint</span>[];
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>For complete API documentation and examples, visit the
+<a href=https://github.com/fatlabsxyz/tongo-sdk>GitHub repository</a>.</p></article><footer class=book-footer><div class="flex flex-wrap justify-between"><div><a class="flex align-center" href=https://github.com/fatlabsxyz/tongo-docs/edit/master/packages/tongo-docs/content/docs/sdk.md target=_blank rel=noopener><img src=/svg/edit.svg class=book-icon alt>
+<span>Edit this page</span></a></div></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><a href=#installation>Installation</a></li><li><a href=#architecture>Architecture</a><ul><li><a href=#starknet-homomorphic-encryption-she>Starknet Homomorphic Encryption (SHE)</a></li><li><a href=#tongo-sdk>Tongo SDK</a></li></ul></li><li><a href=#quick-start>Quick Start</a><ul><li><a href=#basic-usage>Basic Usage</a></li><li><a href=#fund-account>Fund Account</a></li><li><a href=#transfer-tokens>Transfer Tokens</a></li><li><a href=#check-balance>Check Balance</a></li></ul></li><li><a href=#api-reference>API Reference</a><ul><li><a href=#account-class>Account Class</a></li></ul></li><li><a href=#operation-objects>Operation Objects</a><ul><li><a href=#fundoperation>FundOperation</a></li><li><a href=#transferoperation>TransferOperation</a></li></ul></li><li><a href=#advanced-features>Advanced Features</a><ul><li><a href=#custom-proving>Custom Proving</a></li><li><a href=#key-derivation>Key Derivation</a></li><li><a href=#balance-recovery>Balance Recovery</a></li></ul></li><li><a href=#integration-examples>Integration Examples</a><ul><li><a href=#wallet-integration>Wallet Integration</a></li><li><a href=#relayer-service>Relayer Service</a></li><li><a href=#defi-integration>DeFi Integration</a></li></ul></li><li><a href=#error-handling>Error Handling</a></li><li><a href=#performance-considerations>Performance Considerations</a><ul><li><a href=#proof-generation>Proof Generation</a></li><li><a href=#balance-decryption>Balance Decryption</a></li><li><a href=#memory-usage>Memory Usage</a></li></ul></li><li><a href=#typescript-types>TypeScript Types</a></li></ul></nav></div></aside></main></body></html>
