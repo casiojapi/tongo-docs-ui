@@ -26,11 +26,35 @@ $$\begin{aligned}
 \text{Enc}[y](b,r) &amp;= (L, R) = (g^b y^r, g^r)
 \end{aligned}$$&lt;p>Where:&lt;/p>
 &lt;ul>
-&lt;li>$y = g^x$ is the user&amp;rsquo;s public key (derived from private key $x$)&lt;/li>
-&lt;li>$g$ is the generator of the Stark curve&lt;/li>
-&lt;li>$b$ is the balance amount in the range $[0, b_{\max})$&lt;/li>
-&lt;li>$r$ is a random blinding factor&lt;/li>
-&lt;li>$p$ is the curve order&lt;/li>
+&lt;li>
+&lt;link rel="stylesheet" href="https://docs.tongo.cash/katex/katex.min.css" />
+&lt;script defer src="https://docs.tongo.cash/katex/katex.min.js">&lt;/script>
+&lt;script defer src="https://docs.tongo.cash/katex/auto-render.min.js" onload="renderMathInElement(document.body);">&lt;/script>&lt;span>
+ \(y = g^x\)
+&lt;/span>
+ is the user&amp;rsquo;s public key (derived from private key &lt;span>
+ \(x\)
+&lt;/span>
+)&lt;/li>
+&lt;li>&lt;span>
+ \(g\)
+&lt;/span>
+ is the generator of the Stark curve&lt;/li>
+&lt;li>&lt;span>
+ \(b\)
+&lt;/span>
+ is the balance amount in the range &lt;span>
+ \([0, b_{\max})\)
+&lt;/span>
+&lt;/li>
+&lt;li>&lt;span>
+ \(r\)
+&lt;/span>
+ is a random blinding factor&lt;/li>
+&lt;li>&lt;span>
+ \(p\)
+&lt;/span>
+ is the curve order&lt;/li>
 &lt;/ul>
 &lt;h2 id="additive-homomorphism">
  Additive Homomorphism
@@ -45,39 +69,28 @@ $$\begin{aligned}
  Transfer Overview
  &lt;a class="anchor" href="#transfer-overview">#&lt;/a>
 &lt;/h2>
-&lt;p>When a user (sender) with public key $y_s$ and balance $b_0$ wants to transfer amount $b &amp;lt; b_0$ to a receiver with public key $y_r$, they must:&lt;/p>
+&lt;p>When a user (sender) with public key 
+&lt;link rel="stylesheet" href="https://docs.tongo.cash/katex/katex.min.css" />
+&lt;script defer src="https://docs.tongo.cash/katex/katex.min.js">&lt;/script>
+&lt;script defer src="https://docs.tongo.cash/katex/auto-render.min.js" onload="renderMathInElement(document.body);">&lt;/script>&lt;span>
+ \(y_s\)
+&lt;/span>
+ and balance &lt;span>
+ \(b_0\)
+&lt;/span>
+ wants to transfer amount &lt;span>
+ \(b &lt; b_0\)
+&lt;/span>
+ to a receiver with public key &lt;span>
+ \(y_r\)
+&lt;/span>
+, they must:&lt;/p>
 &lt;ol>
 &lt;li>&lt;strong>Create encryptions&lt;/strong> for sender, receiver, and auditor&lt;/li>
 &lt;li>&lt;strong>Generate ZK proofs&lt;/strong> to validate the transaction&lt;/li>
 &lt;li>&lt;strong>Submit transaction&lt;/strong> with ciphertexts and proofs&lt;/li>
 &lt;/ol>
-&lt;p>The key insight is that balances are updated &lt;strong>homomorphically&lt;/strong> without revealing the transfer amount.&lt;/p></description></item><item><title>Zero-Knowledge Proof System</title><link>https://docs.tongo.cash/docs/zk-proofs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/zk-proofs/</guid><description>&lt;h1 id="zero-knowledge-proof-system">
- Zero-Knowledge Proof System
- &lt;a class="anchor" href="#zero-knowledge-proof-system">#&lt;/a>
-&lt;/h1>
-&lt;p>Tongo&amp;rsquo;s security relies on three fundamental zero-knowledge proof primitives, all built using sigma protocols over the Stark elliptic curve. These proofs require no trusted setup and leverage only basic elliptic curve operations.&lt;/p>
-&lt;h2 id="proof-primitives">
- Proof Primitives
- &lt;a class="anchor" href="#proof-primitives">#&lt;/a>
-&lt;/h2>
-&lt;p>All Tongo operations are built from three core proof types:&lt;/p>
-&lt;ul>
-&lt;li>&lt;strong>POE&lt;/strong>: Proof of Exponent (discrete logarithm knowledge)&lt;/li>
-&lt;li>&lt;strong>PED&lt;/strong>: Pedersen Commitment proofs&lt;/li>
-&lt;li>&lt;strong>RAN&lt;/strong>: Range proofs (32-bit decomposition)&lt;/li>
-&lt;/ul>
-&lt;blockquote class="book-hint info">
- 
-**No Circuits Required**: Unlike zkSNARK systems, Tongo doesn't require circuit compilation or trusted setups. All proofs use native elliptic curve arithmetic.
-
-&lt;/blockquote>
-
-&lt;hr>
-&lt;h2 id="poe-proof-of-exponent">
- POE: Proof of Exponent
- &lt;a class="anchor" href="#poe-proof-of-exponent">#&lt;/a>
-&lt;/h2>
-&lt;p>The most fundamental proof demonstrates knowledge of a discrete logarithm.&lt;/p></description></item><item><title>Auditing &amp; Compliance</title><link>https://docs.tongo.cash/docs/auditor/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/auditor/</guid><description>&lt;h1 id="auditing--compliance">
+&lt;p>The key insight is that balances are updated &lt;strong>homomorphically&lt;/strong> without revealing the transfer amount.&lt;/p></description></item><item><title>Auditing &amp; Compliance</title><link>https://docs.tongo.cash/docs/auditor/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/auditor/</guid><description>&lt;h1 id="auditing--compliance">
  Auditing &amp;amp; Compliance
  &lt;a class="anchor" href="#auditing--compliance">#&lt;/a>
 &lt;/h1>
@@ -90,7 +103,7 @@ $$\begin{aligned}
  Concept
  &lt;a class="anchor" href="#concept">#&lt;/a>
 &lt;/h3>
-&lt;p>The Tongo contract can designate a &lt;strong>global auditor&lt;/strong> with public key $y_a$. All transfers are automatically encrypted for this auditor, providing a comprehensive audit trail without revealing amounts on-chain.&lt;/p></description></item><item><title>SDK Documentation</title><link>https://docs.tongo.cash/docs/sdk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/sdk/</guid><description>&lt;h1 id="sdk-documentation">
+&lt;p>The Tongo contract can designate a &lt;strong>global auditor&lt;/strong> with public key (y_a). All transfers are automatically encrypted for this auditor, providing a comprehensive audit trail without revealing amounts on-chain.&lt;/p></description></item><item><title>SDK Documentation</title><link>https://docs.tongo.cash/docs/sdk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/sdk/</guid><description>&lt;h1 id="sdk-documentation">
  SDK Documentation
  &lt;a class="anchor" href="#sdk-documentation">#&lt;/a>
 &lt;/h1>
@@ -125,36 +138,36 @@ $$\begin{aligned}
  &lt;a class="anchor" href="#core-contract-maincairo">#&lt;/a>
 &lt;/h3>
 &lt;p>The main &lt;code>Tongo&lt;/code> contract implements the &lt;code>ITongo&lt;/code> interface and manages all confidential payment operations:&lt;/p>
-&lt;pre tabindex="0">&lt;code class="language-cairo" data-lang="cairo">#[starknet::interface]
-pub trait ITongo&amp;lt;TContractState&amp;gt; {
- fn fund(ref self: TContractState, fund: Fund);
- fn rollover(ref self: TContractState, rollover: Rollover);
- fn withdraw_all(ref self: TContractState, withdraw_all: WithdrawAll);
- fn withdraw(ref self: TContractState, withdraw: Withdraw);
- fn transfer(ref self: TContractState, transfer: Transfer);
- 
- // State queries
- fn get_balance(self: @TContractState, y: PubKey) -&amp;gt; CipherBalance;
- fn get_audit(self: @TContractState, y: PubKey) -&amp;gt; CipherBalance;
- fn get_pending(self: @TContractState, y: PubKey) -&amp;gt; CipherBalance;
- fn get_nonce(self: @TContractState, y: PubKey) -&amp;gt; u64;
- fn get_state(self: @TContractState, y: PubKey) -&amp;gt; State;
- fn ERC20(self: @TContractState) -&amp;gt; ContractAddress;
-}
-&lt;/code>&lt;/pre>&lt;h3 id="storage-structure">
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-rust" data-lang="rust">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#[starknet::interface]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">pub&lt;/span> &lt;span style="color:#66d9ef">trait&lt;/span> ITongo&lt;span style="color:#f92672">&amp;lt;&lt;/span>TContractState&lt;span style="color:#f92672">&amp;gt;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">fn&lt;/span> &lt;span style="color:#a6e22e">fund&lt;/span>(&lt;span style="color:#66d9ef">ref&lt;/span> self: &lt;span style="color:#a6e22e">TContractState&lt;/span>, fund: &lt;span style="color:#a6e22e">Fund&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">fn&lt;/span> &lt;span style="color:#a6e22e">rollover&lt;/span>(&lt;span style="color:#66d9ef">ref&lt;/span> self: &lt;span style="color:#a6e22e">TContractState&lt;/span>, rollover: &lt;span style="color:#a6e22e">Rollover&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">fn&lt;/span> &lt;span style="color:#a6e22e">withdraw_all&lt;/span>(&lt;span style="color:#66d9ef">ref&lt;/span> self: &lt;span style="color:#a6e22e">TContractState&lt;/span>, withdraw_all: &lt;span style="color:#a6e22e">WithdrawAll&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">fn&lt;/span> &lt;span style="color:#a6e22e">withdraw&lt;/span>(&lt;span style="color:#66d9ef">ref&lt;/span> self: &lt;span style="color:#a6e22e">TContractState&lt;/span>, withdraw: &lt;span style="color:#a6e22e">Withdraw&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">fn&lt;/span> &lt;span style="color:#a6e22e">transfer&lt;/span>(&lt;span style="color:#66d9ef">ref&lt;/span> self: &lt;span style="color:#a6e22e">TContractState&lt;/span>, transfer: &lt;span style="color:#a6e22e">Transfer&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// State queries
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">fn&lt;/span> &lt;span style="color:#a6e22e">get_balance&lt;/span>(self: &lt;span style="color:#f92672">@&lt;/span>TContractState, y: &lt;span style="color:#a6e22e">PubKey&lt;/span>) -&amp;gt; &lt;span style="color:#a6e22e">CipherBalance&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">fn&lt;/span> &lt;span style="color:#a6e22e">get_audit&lt;/span>(self: &lt;span style="color:#f92672">@&lt;/span>TContractState, y: &lt;span style="color:#a6e22e">PubKey&lt;/span>) -&amp;gt; &lt;span style="color:#a6e22e">CipherBalance&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">fn&lt;/span> &lt;span style="color:#a6e22e">get_pending&lt;/span>(self: &lt;span style="color:#f92672">@&lt;/span>TContractState, y: &lt;span style="color:#a6e22e">PubKey&lt;/span>) -&amp;gt; &lt;span style="color:#a6e22e">CipherBalance&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">fn&lt;/span> &lt;span style="color:#a6e22e">get_nonce&lt;/span>(self: &lt;span style="color:#f92672">@&lt;/span>TContractState, y: &lt;span style="color:#a6e22e">PubKey&lt;/span>) -&amp;gt; &lt;span style="color:#66d9ef">u64&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">fn&lt;/span> &lt;span style="color:#a6e22e">get_state&lt;/span>(self: &lt;span style="color:#f92672">@&lt;/span>TContractState, y: &lt;span style="color:#a6e22e">PubKey&lt;/span>) -&amp;gt; &lt;span style="color:#a6e22e">State&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">fn&lt;/span> &lt;span style="color:#a6e22e">ERC20&lt;/span>(self: &lt;span style="color:#f92672">@&lt;/span>TContractState) -&amp;gt; &lt;span style="color:#a6e22e">ContractAddress&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="storage-structure">
  Storage Structure
  &lt;a class="anchor" href="#storage-structure">#&lt;/a>
 &lt;/h3>
-&lt;pre tabindex="0">&lt;code class="language-cairo" data-lang="cairo">#[storage]
-struct Storage {
- balance: Map&amp;lt;PubKey, CipherBalance&amp;gt;, // Main encrypted balances
- audit_balance: Map&amp;lt;PubKey, CipherBalance&amp;gt;, // Auditor encrypted copies
- pending: Map&amp;lt;PubKey, CipherBalance&amp;gt;, // Incoming transfer buffer
- ae_balance: Map&amp;lt;PubKey, AEBalance&amp;gt;, // Fast decrypt hints
- ae_audit_balance: Map&amp;lt;PubKey, AEBalance&amp;gt;, // Fast decrypt audit hints
- nonce: Map&amp;lt;PubKey, u64&amp;gt;, // Replay protection
-}
-&lt;/code>&lt;/pre>&lt;h3 id="events">
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-rust" data-lang="rust">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#[storage]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">struct&lt;/span> &lt;span style="color:#a6e22e">Storage&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> balance: &lt;span style="color:#a6e22e">Map&lt;/span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>PubKey, CipherBalance&lt;span style="color:#f92672">&amp;gt;&lt;/span>, &lt;span style="color:#75715e">// Main encrypted balances
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> audit_balance: &lt;span style="color:#a6e22e">Map&lt;/span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>PubKey, CipherBalance&lt;span style="color:#f92672">&amp;gt;&lt;/span>, &lt;span style="color:#75715e">// Auditor encrypted copies
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> pending: &lt;span style="color:#a6e22e">Map&lt;/span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>PubKey, CipherBalance&lt;span style="color:#f92672">&amp;gt;&lt;/span>, &lt;span style="color:#75715e">// Incoming transfer buffer
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> ae_balance: &lt;span style="color:#a6e22e">Map&lt;/span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>PubKey, AEBalance&lt;span style="color:#f92672">&amp;gt;&lt;/span>, &lt;span style="color:#75715e">// Fast decrypt hints
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> ae_audit_balance: &lt;span style="color:#a6e22e">Map&lt;/span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>PubKey, AEBalance&lt;span style="color:#f92672">&amp;gt;&lt;/span>, &lt;span style="color:#75715e">// Fast decrypt audit hints
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> nonce: &lt;span style="color:#a6e22e">Map&lt;/span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>PubKey, &lt;span style="color:#66d9ef">u64&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span>, &lt;span style="color:#75715e">// Replay protection
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="events">
  Events
  &lt;a class="anchor" href="#events">#&lt;/a>
 &lt;/h3>
@@ -256,104 +269,4 @@ struct Storage {
  Proof of Exponent (POE)
  &lt;a class="anchor" href="#proof-of-exponent-poe">#&lt;/a>
 &lt;/h3>
-&lt;p>Proves knowledge of discrete logarithm $x$ such that $y = g^x$:&lt;/p></description></item><item><title>TypeScript SDK</title><link>https://docs.tongo.cash/docs/tongo-sdk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/tongo-sdk/</guid><description>&lt;h1 id="tongo-typescript-sdk">
- Tongo TypeScript SDK
- &lt;a class="anchor" href="#tongo-typescript-sdk">#&lt;/a>
-&lt;/h1>
-&lt;p>The &lt;code>tongo-sdk&lt;/code> provides a high-level TypeScript interface for building applications with confidential payments. It abstracts away cryptographic complexity while providing full access to Tongo&amp;rsquo;s features.&lt;/p>
-&lt;h2 id="installation">
- Installation
- &lt;a class="anchor" href="#installation">#&lt;/a>
-&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>npm install tongo-sdk
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="quick-start">
- Quick Start
- &lt;a class="anchor" href="#quick-start">#&lt;/a>
-&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-typescript" data-lang="typescript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> { &lt;span style="color:#a6e22e">Account&lt;/span> } &lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#e6db74">&amp;#39;tongo-sdk&amp;#39;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Create account from secret key
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">account&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Account&lt;/span>(
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">secretKey&lt;/span>, &lt;span style="color:#75715e">// Private key (bigint or Uint8Array)
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#e6db74">&amp;#39;0x123...tongoAddress&amp;#39;&lt;/span>, &lt;span style="color:#75715e">// Deployed Tongo contract
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">provider&lt;/span> &lt;span style="color:#75715e">// Optional: Starknet RPC provider
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>);
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">account&lt;/span>.&lt;span style="color:#a6e22e">tongoAddress&lt;/span>());
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Output: &amp;#34;5mJNv2Z8QxFfKw7hL3e9P1rT6sY4pQ2nX8kM7dR3cB1&amp;#34;
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;hr>
-&lt;h2 id="account-management">
- Account Management
- &lt;a class="anchor" href="#account-management">#&lt;/a>
-&lt;/h2>
-&lt;h3 id="constructor">
- Constructor
- &lt;a class="anchor" href="#constructor">#&lt;/a>
-&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-typescript" data-lang="typescript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Constructor signature
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Account&lt;/span>(
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">privateKey&lt;/span>: &lt;span style="color:#66d9ef">BigNumberish&lt;/span> &lt;span style="color:#f92672">|&lt;/span> &lt;span style="color:#a6e22e">Uint8Array&lt;/span>, &lt;span style="color:#75715e">// Private key
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">contractAddress&lt;/span>: &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#75715e">// Tongo contract address
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">provider?&lt;/span>: &lt;span style="color:#66d9ef">RpcProvider&lt;/span> &lt;span style="color:#75715e">// Optional Starknet provider
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>)
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="key-operations">
- Key Operations
- &lt;a class="anchor" href="#key-operations">#&lt;/a>
-&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-typescript" data-lang="typescript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Get public key as coordinate object
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">pubKey&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">account&lt;/span>.&lt;span style="color:#a6e22e">publicKey&lt;/span>; &lt;span style="color:#75715e">// {x: bigint, y: bigint}
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Get base58-encoded public key
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">tongoAddr&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">account&lt;/span>.&lt;span style="color:#a6e22e">tongoAddress&lt;/span>();
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Get current nonce (for replay protection)
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">nonce&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#a6e22e">account&lt;/span>.&lt;span style="color:#a6e22e">nonce&lt;/span>();
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;hr>
-&lt;h2 id="balance-management">
- Balance Management
- &lt;a class="anchor" href="#balance-management">#&lt;/a>
-&lt;/h2>
-&lt;h3 id="query-balances">
- Query Balances
- &lt;a class="anchor" href="#query-balances">#&lt;/a>
-&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-typescript" data-lang="typescript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Get encrypted balance from contract
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">encryptedBalance&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#a6e22e">account&lt;/span>.&lt;span style="color:#a6e22e">balance&lt;/span>();
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Get encrypted pending balance (incoming transfers)
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">encryptedPending&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#a6e22e">account&lt;/span>.&lt;span style="color:#a6e22e">pending&lt;/span>();
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Get complete account state
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">state&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#a6e22e">account&lt;/span>.&lt;span style="color:#a6e22e">state&lt;/span>();
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">state&lt;/span>);
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// {
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// balance: CipherBalance,
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// pending: CipherBalance,
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// audit: CipherBalance,
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// aeBalance: AEHint,
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// aeAuditBalance: AEHint,
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// nonce: bigint
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// }
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="decrypt-balances">
- Decrypt Balances
- &lt;a class="anchor" href="#decrypt-balances">#&lt;/a>
-&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-typescript" data-lang="typescript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Decrypt with brute force (specify reasonable range)
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">actualBalance&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#a6e22e">account&lt;/span>.&lt;span style="color:#a6e22e">decryptBalance&lt;/span>();
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">pendingAmount&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#a6e22e">account&lt;/span>.&lt;span style="color:#a6e22e">decryptPending&lt;/span>();
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Decrypt specific ciphertext
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">amount&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">account&lt;/span>.&lt;span style="color:#a6e22e">decryptCipherBalance&lt;/span>(&lt;span style="color:#a6e22e">encryptedBalance&lt;/span>);
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Note: Fast decryption using AE hints requires the balance to be
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// within the expected range for brute force decryption
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;hr>
-&lt;h2 id="transaction-operations">
- Transaction Operations
- &lt;a class="anchor" href="#transaction-operations">#&lt;/a>
-&lt;/h2>
-&lt;h3 id="fund-account">
- Fund Account
- &lt;a class="anchor" href="#fund-account">#&lt;/a>
-&lt;/h3>
-&lt;p>Convert ERC20 tokens to encrypted balances:&lt;/p></description></item><item><title/><link>https://docs.tongo.cash/docs/math-test/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/math-test/</guid><description/></item></channel></rss>
+&lt;p>Proves knowledge of discrete logarithm \\(x\\) such that \\(y = g^x\\):&lt;/p></description></item><item><title/><link>https://docs.tongo.cash/docs/math-test/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/math-test/</guid><description/></item></channel></rss>

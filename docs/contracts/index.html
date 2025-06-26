@@ -47,204 +47,204 @@ struct Storage {
 
 The contract emits events for all operations to enable off-chain monitoring:"><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://docs.tongo.cash/docs/contracts/"><meta property="og:site_name" content="Tongo Protocol"><meta property="og:title" content="Cairo Contracts"><meta property="og:description" content="Cairo Contracts # The Tongo protocol is implemented as a Cairo smart contract on Starknet, leveraging native elliptic curve operations for efficient zero-knowledge proof verification.
 Contract Architecture # Core Contract (main.cairo) # The main Tongo contract implements the ITongo interface and manages all confidential payment operations:
-#[starknet::interface] pub trait ITongo<TContractState> { fn fund(ref self: TContractState, fund: Fund); fn rollover(ref self: TContractState, rollover: Rollover); fn withdraw_all(ref self: TContractState, withdraw_all: WithdrawAll); fn withdraw(ref self: TContractState, withdraw: Withdraw); fn transfer(ref self: TContractState, transfer: Transfer); // State queries fn get_balance(self: @TContractState, y: PubKey) -> CipherBalance; fn get_audit(self: @TContractState, y: PubKey) -> CipherBalance; fn get_pending(self: @TContractState, y: PubKey) -> CipherBalance; fn get_nonce(self: @TContractState, y: PubKey) -> u64; fn get_state(self: @TContractState, y: PubKey) -> State; fn ERC20(self: @TContractState) -> ContractAddress; } Storage Structure # #[storage] struct Storage { balance: Map<PubKey, CipherBalance>, // Main encrypted balances audit_balance: Map<PubKey, CipherBalance>, // Auditor encrypted copies pending: Map<PubKey, CipherBalance>, // Incoming transfer buffer ae_balance: Map<PubKey, AEBalance>, // Fast decrypt hints ae_audit_balance: Map<PubKey, AEBalance>, // Fast decrypt audit hints nonce: Map<PubKey, u64>, // Replay protection } Events # The contract emits events for all operations to enable off-chain monitoring:"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="docs"><title>Cairo Contracts | Tongo Protocol</title><link rel=icon href=/favicon.png><link rel=manifest href=/manifest.json><link rel=canonical href=https://docs.tongo.cash/docs/contracts/><link rel=stylesheet href=/book.min.a3621cc5553a2d3e6c1eef6158eab15d0c78037147ea50c2b0cc1400e7b455c5.css integrity="sha256-o2IcxVU6LT5sHu9hWOqxXQx4A3FH6lDCsMwUAOe0VcU=" crossorigin=anonymous><script defer src=/fuse.min.js></script><script defer src=/en.search.min.f638ad1f04431c5b01b2701c0a28e77eeebeee90e0dd56137e0021af744964d2.js integrity="sha256-9jitHwRDHFsBsnAcCijnfu6+7pDg3VYTfgAhr3RJZNI=" crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js onload=renderMathInElement(document.body)></script><script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:!0},{left:"$$",right:"$$",display:!0},{left:"\\(",right:"\\)",display:!1}],throwOnError:!1})})</script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
-<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>Tongo Protocol</span></a></h2><div class="book-search hidden"><input type=text id=book-search-input placeholder=Search aria-label=Search maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><script>document.querySelector(".book-search").classList.remove("hidden")</script><ul><li><a href=/docs/intro-to-tongo/>Introduction</a></li><li><a href=/docs/encryption/>Encryption System</a></li><li><a href=/docs/transfer/>Transfer Protocol</a></li><li><a href=/docs/zk-proofs/>Zero-Knowledge Proof System</a></li><li><a href=/docs/auditor/>Auditing & Compliance</a></li><li><a href=/docs/sdk/>SDK Documentation</a></li><li><a href=/docs/contracts/ class=active>Cairo Contracts</a></li><li><a href=/docs/she/>SHE Library</a></li><li><a href=/docs/tongo-sdk/>TypeScript SDK</a></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label><h3>Cairo Contracts</h3><label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><a href=#contract-architecture>Contract Architecture</a><ul><li><a href=#core-contract-maincairo>Core Contract (<code>main.cairo</code>)</a></li><li><a href=#storage-structure>Storage Structure</a></li><li><a href=#events>Events</a></li></ul></li><li><a href=#data-structures>Data Structures</a><ul><li><a href=#core-types>Core Types</a></li><li><a href=#operation-structures>Operation Structures</a></li></ul></li><li><a href=#verification-system>Verification System</a><ul><li><a href=#proof-verifier-verifier>Proof Verifier (<code>verifier/</code>)</a></li></ul></li><li><a href=#operations>Operations</a><ul><li><a href=#1-fund-operation>1. Fund Operation</a></li><li><a href=#2-transfer-operation>2. Transfer Operation</a></li><li><a href=#3-rollover-operation>3. Rollover Operation</a></li></ul></li><li><a href=#security-features>Security Features</a><ul><li><a href=#anti-spam-protection>Anti-Spam Protection</a></li><li><a href=#range-proof-security>Range Proof Security</a></li><li><a href=#cryptographic-guarantees>Cryptographic Guarantees</a></li></ul></li><li><a href=#deployment>Deployment</a><ul><li><a href=#configuration>Configuration</a></li><li><a href=#dependencies>Dependencies</a></li><li><a href=#gas-optimization>Gas Optimization</a></li></ul></li><li><a href=#testing>Testing</a></li></ul></nav></aside></header><article class="markdown book-article"><h1 id=cairo-contracts>Cairo Contracts
+#[starknet::interface] pub trait ITongo<TContractState> { fn fund(ref self: TContractState, fund: Fund); fn rollover(ref self: TContractState, rollover: Rollover); fn withdraw_all(ref self: TContractState, withdraw_all: WithdrawAll); fn withdraw(ref self: TContractState, withdraw: Withdraw); fn transfer(ref self: TContractState, transfer: Transfer); // State queries fn get_balance(self: @TContractState, y: PubKey) -> CipherBalance; fn get_audit(self: @TContractState, y: PubKey) -> CipherBalance; fn get_pending(self: @TContractState, y: PubKey) -> CipherBalance; fn get_nonce(self: @TContractState, y: PubKey) -> u64; fn get_state(self: @TContractState, y: PubKey) -> State; fn ERC20(self: @TContractState) -> ContractAddress; } Storage Structure # #[storage] struct Storage { balance: Map<PubKey, CipherBalance>, // Main encrypted balances audit_balance: Map<PubKey, CipherBalance>, // Auditor encrypted copies pending: Map<PubKey, CipherBalance>, // Incoming transfer buffer ae_balance: Map<PubKey, AEBalance>, // Fast decrypt hints ae_audit_balance: Map<PubKey, AEBalance>, // Fast decrypt audit hints nonce: Map<PubKey, u64>, // Replay protection } Events # The contract emits events for all operations to enable off-chain monitoring:"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="docs"><title>Cairo Contracts | Tongo Protocol</title><link rel=icon href=/favicon.png><link rel=manifest href=/manifest.json><link rel=canonical href=https://docs.tongo.cash/docs/contracts/><link rel=stylesheet href=/book.min.a3621cc5553a2d3e6c1eef6158eab15d0c78037147ea50c2b0cc1400e7b455c5.css integrity="sha256-o2IcxVU6LT5sHu9hWOqxXQx4A3FH6lDCsMwUAOe0VcU=" crossorigin=anonymous><script defer src=/fuse.min.js></script><script defer src=/en.search.min.1c46a43328ca5d955516e925bac002c568590ea862ceaff53209148ac0e0c5b6.js integrity="sha256-HEakMyjKXZVVFuklusACxWhZDqhizq/1MgkUisDgxbY=" crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js onload=renderMathInElement(document.body)></script><script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:!0},{left:"$$",right:"$$",display:!0},{left:"\\(",right:"\\)",display:!1}],throwOnError:!1})})</script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>Tongo Protocol</span></a></h2><div class="book-search hidden"><input type=text id=book-search-input placeholder=Search aria-label=Search maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><script>document.querySelector(".book-search").classList.remove("hidden")</script><ul><li><a href=/docs/intro-to-tongo/>Introduction</a></li><li><a href=/docs/encryption/>Encryption System</a></li><li><a href=/docs/transfer/>Transfer Protocol</a></li><li><a href=/docs/auditor/>Auditing & Compliance</a></li><li><a href=/docs/sdk/>SDK Documentation</a></li><li><a href=/docs/contracts/ class=active>Cairo Contracts</a></li><li><a href=/docs/she/>SHE Library</a></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label><h3>Cairo Contracts</h3><label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><a href=#contract-architecture>Contract Architecture</a><ul><li><a href=#core-contract-maincairo>Core Contract (<code>main.cairo</code>)</a></li><li><a href=#storage-structure>Storage Structure</a></li><li><a href=#events>Events</a></li></ul></li><li><a href=#data-structures>Data Structures</a><ul><li><a href=#core-types>Core Types</a></li><li><a href=#operation-structures>Operation Structures</a></li></ul></li><li><a href=#verification-system>Verification System</a><ul><li><a href=#proof-verifier-verifier>Proof Verifier (<code>verifier/</code>)</a></li></ul></li><li><a href=#operations>Operations</a><ul><li><a href=#1-fund-operation>1. Fund Operation</a></li><li><a href=#2-transfer-operation>2. Transfer Operation</a></li><li><a href=#3-rollover-operation>3. Rollover Operation</a></li></ul></li><li><a href=#security-features>Security Features</a><ul><li><a href=#anti-spam-protection>Anti-Spam Protection</a></li><li><a href=#range-proof-security>Range Proof Security</a></li><li><a href=#cryptographic-guarantees>Cryptographic Guarantees</a></li></ul></li><li><a href=#deployment>Deployment</a><ul><li><a href=#configuration>Configuration</a></li><li><a href=#dependencies>Dependencies</a></li><li><a href=#gas-optimization>Gas Optimization</a></li></ul></li><li><a href=#testing>Testing</a></li></ul></nav></aside></header><article class="markdown book-article"><h1 id=cairo-contracts>Cairo Contracts
 <a class=anchor href=#cairo-contracts>#</a></h1><p>The Tongo protocol is implemented as a Cairo smart contract on Starknet, leveraging native elliptic curve operations for efficient zero-knowledge proof verification.</p><h2 id=contract-architecture>Contract Architecture
 <a class=anchor href=#contract-architecture>#</a></h2><h3 id=core-contract-maincairo>Core Contract (<code>main.cairo</code>)
-<a class=anchor href=#core-contract-maincairo>#</a></h3><p>The main <code>Tongo</code> contract implements the <code>ITongo</code> interface and manages all confidential payment operations:</p><pre tabindex=0><code class=language-cairo data-lang=cairo>#[starknet::interface]
-pub trait ITongo&lt;TContractState&gt; {
-    fn fund(ref self: TContractState, fund: Fund);
-    fn rollover(ref self: TContractState, rollover: Rollover);
-    fn withdraw_all(ref self: TContractState, withdraw_all: WithdrawAll);
-    fn withdraw(ref self: TContractState, withdraw: Withdraw);
-    fn transfer(ref self: TContractState, transfer: Transfer);
-    
-    // State queries
-    fn get_balance(self: @TContractState, y: PubKey) -&gt; CipherBalance;
-    fn get_audit(self: @TContractState, y: PubKey) -&gt; CipherBalance;
-    fn get_pending(self: @TContractState, y: PubKey) -&gt; CipherBalance;
-    fn get_nonce(self: @TContractState, y: PubKey) -&gt; u64;
-    fn get_state(self: @TContractState, y: PubKey) -&gt; State;
-    fn ERC20(self: @TContractState) -&gt; ContractAddress;
-}
-</code></pre><h3 id=storage-structure>Storage Structure
-<a class=anchor href=#storage-structure>#</a></h3><pre tabindex=0><code class=language-cairo data-lang=cairo>#[storage]
-struct Storage {
-    balance: Map&lt;PubKey, CipherBalance&gt;,        // Main encrypted balances
-    audit_balance: Map&lt;PubKey, CipherBalance&gt;,  // Auditor encrypted copies
-    pending: Map&lt;PubKey, CipherBalance&gt;,        // Incoming transfer buffer
-    ae_balance: Map&lt;PubKey, AEBalance&gt;,        // Fast decrypt hints
-    ae_audit_balance: Map&lt;PubKey, AEBalance&gt;,  // Fast decrypt audit hints
-    nonce: Map&lt;PubKey, u64&gt;,                   // Replay protection
-}
-</code></pre><h3 id=events>Events
-<a class=anchor href=#events>#</a></h3><p>The contract emits events for all operations to enable off-chain monitoring:</p><pre tabindex=0><code class=language-cairo data-lang=cairo>#[derive(Drop, starknet::Event)]
-struct TransferEvent {
-    from: PubKey,
-    to: PubKey,
-    nonce: u64
-}
-
-#[derive(Drop, starknet::Event)]  
-struct FundEvent {
-    to: PubKey,
-    amount: felt252,
-    nonce: u64
-}
-
-#[derive(Drop, starknet::Event)]
-struct WithdrawEvent {
-    from: PubKey,
-    to: ContractAddress,
-    amount: felt252,
-    nonce: u64
-}
-
-#[derive(Drop, starknet::Event)]
-struct RolloverEvent {
-    account: PubKey,
-    nonce: u64
-}
-</code></pre><hr><h2 id=data-structures>Data Structures
+<a class=anchor href=#core-contract-maincairo>#</a></h3><p>The main <code>Tongo</code> contract implements the <code>ITongo</code> interface and manages all confidential payment operations:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=display:flex><span><span style=color:#75715e>#[starknet::interface]</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>pub</span> <span style=color:#66d9ef>trait</span> ITongo<span style=color:#f92672>&lt;</span>TContractState<span style=color:#f92672>&gt;</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>fund</span>(<span style=color:#66d9ef>ref</span> self: <span style=color:#a6e22e>TContractState</span>, fund: <span style=color:#a6e22e>Fund</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>rollover</span>(<span style=color:#66d9ef>ref</span> self: <span style=color:#a6e22e>TContractState</span>, rollover: <span style=color:#a6e22e>Rollover</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>withdraw_all</span>(<span style=color:#66d9ef>ref</span> self: <span style=color:#a6e22e>TContractState</span>, withdraw_all: <span style=color:#a6e22e>WithdrawAll</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>withdraw</span>(<span style=color:#66d9ef>ref</span> self: <span style=color:#a6e22e>TContractState</span>, withdraw: <span style=color:#a6e22e>Withdraw</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>transfer</span>(<span style=color:#66d9ef>ref</span> self: <span style=color:#a6e22e>TContractState</span>, transfer: <span style=color:#a6e22e>Transfer</span>);
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// State queries
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>get_balance</span>(self: <span style=color:#f92672>@</span>TContractState, y: <span style=color:#a6e22e>PubKey</span>) -&gt; <span style=color:#a6e22e>CipherBalance</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>get_audit</span>(self: <span style=color:#f92672>@</span>TContractState, y: <span style=color:#a6e22e>PubKey</span>) -&gt; <span style=color:#a6e22e>CipherBalance</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>get_pending</span>(self: <span style=color:#f92672>@</span>TContractState, y: <span style=color:#a6e22e>PubKey</span>) -&gt; <span style=color:#a6e22e>CipherBalance</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>get_nonce</span>(self: <span style=color:#f92672>@</span>TContractState, y: <span style=color:#a6e22e>PubKey</span>) -&gt; <span style=color:#66d9ef>u64</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>get_state</span>(self: <span style=color:#f92672>@</span>TContractState, y: <span style=color:#a6e22e>PubKey</span>) -&gt; <span style=color:#a6e22e>State</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>ERC20</span>(self: <span style=color:#f92672>@</span>TContractState) -&gt; <span style=color:#a6e22e>ContractAddress</span>;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=storage-structure>Storage Structure
+<a class=anchor href=#storage-structure>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=display:flex><span><span style=color:#75715e>#[storage]</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>Storage</span> {
+</span></span><span style=display:flex><span>    balance: <span style=color:#a6e22e>Map</span><span style=color:#f92672>&lt;</span>PubKey, CipherBalance<span style=color:#f92672>&gt;</span>,        <span style=color:#75715e>// Main encrypted balances
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    audit_balance: <span style=color:#a6e22e>Map</span><span style=color:#f92672>&lt;</span>PubKey, CipherBalance<span style=color:#f92672>&gt;</span>,  <span style=color:#75715e>// Auditor encrypted copies
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    pending: <span style=color:#a6e22e>Map</span><span style=color:#f92672>&lt;</span>PubKey, CipherBalance<span style=color:#f92672>&gt;</span>,        <span style=color:#75715e>// Incoming transfer buffer
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    ae_balance: <span style=color:#a6e22e>Map</span><span style=color:#f92672>&lt;</span>PubKey, AEBalance<span style=color:#f92672>&gt;</span>,        <span style=color:#75715e>// Fast decrypt hints
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    ae_audit_balance: <span style=color:#a6e22e>Map</span><span style=color:#f92672>&lt;</span>PubKey, AEBalance<span style=color:#f92672>&gt;</span>,  <span style=color:#75715e>// Fast decrypt audit hints
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    nonce: <span style=color:#a6e22e>Map</span><span style=color:#f92672>&lt;</span>PubKey, <span style=color:#66d9ef>u64</span><span style=color:#f92672>&gt;</span>,                   <span style=color:#75715e>// Replay protection
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span></code></pre></div><h3 id=events>Events
+<a class=anchor href=#events>#</a></h3><p>The contract emits events for all operations to enable off-chain monitoring:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=display:flex><span><span style=color:#75715e>#[derive(Drop, starknet::Event)]</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>TransferEvent</span> {
+</span></span><span style=display:flex><span>    from: <span style=color:#a6e22e>PubKey</span>,
+</span></span><span style=display:flex><span>    to: <span style=color:#a6e22e>PubKey</span>,
+</span></span><span style=display:flex><span>    nonce: <span style=color:#66d9ef>u64</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#[derive(Drop, starknet::Event)]</span>  
+</span></span><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>FundEvent</span> {
+</span></span><span style=display:flex><span>    to: <span style=color:#a6e22e>PubKey</span>,
+</span></span><span style=display:flex><span>    amount: <span style=color:#a6e22e>felt252</span>,
+</span></span><span style=display:flex><span>    nonce: <span style=color:#66d9ef>u64</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#[derive(Drop, starknet::Event)]</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>WithdrawEvent</span> {
+</span></span><span style=display:flex><span>    from: <span style=color:#a6e22e>PubKey</span>,
+</span></span><span style=display:flex><span>    to: <span style=color:#a6e22e>ContractAddress</span>,
+</span></span><span style=display:flex><span>    amount: <span style=color:#a6e22e>felt252</span>,
+</span></span><span style=display:flex><span>    nonce: <span style=color:#66d9ef>u64</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#[derive(Drop, starknet::Event)]</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>RolloverEvent</span> {
+</span></span><span style=display:flex><span>    account: <span style=color:#a6e22e>PubKey</span>,
+</span></span><span style=display:flex><span>    nonce: <span style=color:#66d9ef>u64</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><hr><h2 id=data-structures>Data Structures
 <a class=anchor href=#data-structures>#</a></h2><h3 id=core-types>Core Types
-<a class=anchor href=#core-types>#</a></h3><pre tabindex=0><code class=language-cairo data-lang=cairo>// Public key as elliptic curve point
-struct PubKey {
-    x: felt252,
-    y: felt252
-}
-
-// ElGamal ciphertext
-struct CipherBalance {
-    CL: StarkPoint,  // g^b * y^r (left component)
-    CR: StarkPoint   // g^r (right component)
-}
-
-// Authenticated encryption balance
-struct AEBalance {
-    ciphertext: u512,
-    nonce: u256
-}
-
-// Complete account state
-struct State {
-    balance: CipherBalance,
-    pending: CipherBalance,
-    audit: CipherBalance,
-    nonce: u64,
-    ae_balance: AEBalance,
-    ae_audit_balance: AEBalance
-}
-</code></pre><h3 id=operation-structures>Operation Structures
-<a class=anchor href=#operation-structures>#</a></h3><pre tabindex=0><code class=language-cairo data-lang=cairo>struct Fund {
-    to: PubKey,
-    amount: felt252,
-    ae_hints: AEHints,
-    proof: ProofOfFund
-}
-
-struct Transfer {
-    from: PubKey,
-    to: PubKey,
-    L: StarkPoint,          // Sender encryption left component
-    L_bar: StarkPoint,      // Receiver encryption left component
-    L_audit: StarkPoint,    // Auditor encryption left component
-    R: StarkPoint,          // Shared right component
-    ae_hints: AEHints,
-    proof: ProofOfTransfer
-}
-
-struct Withdraw {
-    from: PubKey,
-    amount: felt252,
-    to: ContractAddress,    // Starknet address to receive ERC20
-    ae_hints: AEHints,
-    proof: ProofOfWithdraw
-}
-</code></pre><hr><h2 id=verification-system>Verification System
+<a class=anchor href=#core-types>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=display:flex><span><span style=color:#75715e>// Public key as elliptic curve point
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>PubKey</span> {
+</span></span><span style=display:flex><span>    x: <span style=color:#a6e22e>felt252</span>,
+</span></span><span style=display:flex><span>    y: <span style=color:#a6e22e>felt252</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// ElGamal ciphertext
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>CipherBalance</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>CL</span>: <span style=color:#a6e22e>StarkPoint</span>,  <span style=color:#75715e>// g^b * y^r (left component)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>CR</span>: <span style=color:#a6e22e>StarkPoint</span>   <span style=color:#75715e>// g^r (right component)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Authenticated encryption balance
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>AEBalance</span> {
+</span></span><span style=display:flex><span>    ciphertext: <span style=color:#a6e22e>u512</span>,
+</span></span><span style=display:flex><span>    nonce: <span style=color:#a6e22e>u256</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Complete account state
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>State</span> {
+</span></span><span style=display:flex><span>    balance: <span style=color:#a6e22e>CipherBalance</span>,
+</span></span><span style=display:flex><span>    pending: <span style=color:#a6e22e>CipherBalance</span>,
+</span></span><span style=display:flex><span>    audit: <span style=color:#a6e22e>CipherBalance</span>,
+</span></span><span style=display:flex><span>    nonce: <span style=color:#66d9ef>u64</span>,
+</span></span><span style=display:flex><span>    ae_balance: <span style=color:#a6e22e>AEBalance</span>,
+</span></span><span style=display:flex><span>    ae_audit_balance: <span style=color:#a6e22e>AEBalance</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=operation-structures>Operation Structures
+<a class=anchor href=#operation-structures>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>Fund</span> {
+</span></span><span style=display:flex><span>    to: <span style=color:#a6e22e>PubKey</span>,
+</span></span><span style=display:flex><span>    amount: <span style=color:#a6e22e>felt252</span>,
+</span></span><span style=display:flex><span>    ae_hints: <span style=color:#a6e22e>AEHints</span>,
+</span></span><span style=display:flex><span>    proof: <span style=color:#a6e22e>ProofOfFund</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>Transfer</span> {
+</span></span><span style=display:flex><span>    from: <span style=color:#a6e22e>PubKey</span>,
+</span></span><span style=display:flex><span>    to: <span style=color:#a6e22e>PubKey</span>,
+</span></span><span style=display:flex><span>    L: <span style=color:#a6e22e>StarkPoint</span>,          <span style=color:#75715e>// Sender encryption left component
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    L_bar: <span style=color:#a6e22e>StarkPoint</span>,      <span style=color:#75715e>// Receiver encryption left component
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    L_audit: <span style=color:#a6e22e>StarkPoint</span>,    <span style=color:#75715e>// Auditor encryption left component
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    R: <span style=color:#a6e22e>StarkPoint</span>,          <span style=color:#75715e>// Shared right component
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    ae_hints: <span style=color:#a6e22e>AEHints</span>,
+</span></span><span style=display:flex><span>    proof: <span style=color:#a6e22e>ProofOfTransfer</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>Withdraw</span> {
+</span></span><span style=display:flex><span>    from: <span style=color:#a6e22e>PubKey</span>,
+</span></span><span style=display:flex><span>    amount: <span style=color:#a6e22e>felt252</span>,
+</span></span><span style=display:flex><span>    to: <span style=color:#a6e22e>ContractAddress</span>,    <span style=color:#75715e>// Starknet address to receive ERC20
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    ae_hints: <span style=color:#a6e22e>AEHints</span>,
+</span></span><span style=display:flex><span>    proof: <span style=color:#a6e22e>ProofOfWithdraw</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><hr><h2 id=verification-system>Verification System
 <a class=anchor href=#verification-system>#</a></h2><h3 id=proof-verifier-verifier>Proof Verifier (<code>verifier/</code>)
 <a class=anchor href=#proof-verifier-verifier>#</a></h3><p>The contract includes a sophisticated zero-knowledge proof verification system:</p><h4 id=verifiercairo---main-verification-logic><strong>verifier.cairo</strong> - Main verification logic
 <a class=anchor href=#verifiercairo---main-verification-logic>#</a></h4><ul><li><code>verify_fund()</code>: Validates funding proofs (POE)</li><li><code>verify_transfer()</code>: Validates transfer proofs (POE + PED + RAN)</li><li><code>verify_withdraw()</code>: Validates withdrawal proofs (POE + RAN)</li><li><code>verify_range()</code>: Bit-decomposition range proofs</li><li><code>verify_pedersen()</code>: Pedersen commitment proofs</li></ul><h4 id=utilscairo---cryptographic-utilities><strong>utils.cairo</strong> - Cryptographic utilities
 <a class=anchor href=#utilscairo---cryptographic-utilities>#</a></h4><ul><li>Point arithmetic operations</li><li>Hash computations for Fiat-Shamir</li><li>Curve parameter constants</li></ul><h4 id=structscairo---proof-data-structures><strong>structs.cairo</strong> - Proof data structures
-<a class=anchor href=#structscairo---proof-data-structures>#</a></h4><pre tabindex=0><code class=language-cairo data-lang=cairo>struct ProofOfFund {
-    Ax: StarkPoint,
-    sx: felt252
-}
-
-struct ProofOfTransfer {
-    ownership: ProofOfOwnership,
-    blinding: ProofOfOwnership,
-    sender_ped: ProofOfPedersen,
-    receiver_ped: ProofOfPedersen,
-    audit_ped: ProofOfPedersen,
-    amount_range: ProofOfRange,
-    remaining_range: ProofOfRange
-}
-</code></pre><hr><h2 id=operations>Operations
+<a class=anchor href=#structscairo---proof-data-structures>#</a></h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>ProofOfFund</span> {
+</span></span><span style=display:flex><span>    Ax: <span style=color:#a6e22e>StarkPoint</span>,
+</span></span><span style=display:flex><span>    sx: <span style=color:#a6e22e>felt252</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>ProofOfTransfer</span> {
+</span></span><span style=display:flex><span>    ownership: <span style=color:#a6e22e>ProofOfOwnership</span>,
+</span></span><span style=display:flex><span>    blinding: <span style=color:#a6e22e>ProofOfOwnership</span>,
+</span></span><span style=display:flex><span>    sender_ped: <span style=color:#a6e22e>ProofOfPedersen</span>,
+</span></span><span style=display:flex><span>    receiver_ped: <span style=color:#a6e22e>ProofOfPedersen</span>,
+</span></span><span style=display:flex><span>    audit_ped: <span style=color:#a6e22e>ProofOfPedersen</span>,
+</span></span><span style=display:flex><span>    amount_range: <span style=color:#a6e22e>ProofOfRange</span>,
+</span></span><span style=display:flex><span>    remaining_range: <span style=color:#a6e22e>ProofOfRange</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><hr><h2 id=operations>Operations
 <a class=anchor href=#operations>#</a></h2><h3 id=1-fund-operation>1. Fund Operation
-<a class=anchor href=#1-fund-operation>#</a></h3><p>Converts ERC20 tokens to encrypted balances:</p><pre tabindex=0><code class=language-cairo data-lang=cairo>fn fund(ref self: TContractState, fund: Fund) {
-    // Verify proof of ownership
-    verify_fund(fund.proof, fund.to, fund.amount);
-    
-    // Transfer ERC20 from user (implementation details vary)
-    // let erc20 = IERC20Dispatcher { contract_address: erc20_address };
-    // erc20.transfer_from(get_caller_address(), get_contract_address(), fund.amount.into());
-    
-    // Create encrypted balance
-    let cipher = encrypt_balance(fund.amount, fund.to);
-    
-    // Update storage
-    self.balance.write(fund.to, cipher_add(self.balance.read(fund.to), cipher));
-    self.nonce.write(fund.to, self.nonce.read(fund.to) + 1);
-}
-</code></pre><h3 id=2-transfer-operation>2. Transfer Operation
-<a class=anchor href=#2-transfer-operation>#</a></h3><p>Performs confidential transfers between accounts:</p><pre tabindex=0><code class=language-cairo data-lang=cairo>fn transfer(ref self: TContractState, transfer: Transfer) {
-    // Verify comprehensive transfer proof
-    verify_transfer(transfer.proof, /* public inputs */);
-    
-    // Update sender balance (subtract)
-    let sender_cipher = CipherBalance { L: transfer.L, R: transfer.R };
-    let old_balance = self.balance.read(transfer.from);
-    self.balance.write(transfer.from, cipher_subtract(old_balance, sender_cipher));
-    
-    // Update receiver pending (add)
-    let receiver_cipher = CipherBalance { L: transfer.L_rec, R: transfer.R };
-    let old_pending = self.pending.read(transfer.to);
-    self.pending.write(transfer.to, cipher_add(old_pending, receiver_cipher));
-    
-    // Update auditor balance
-    let audit_cipher = CipherBalance { L: transfer.L_audit, R: transfer.R };
-    let old_audit = self.audit_balance.read(transfer.from);
-    self.audit_balance.write(transfer.from, cipher_subtract(old_audit, audit_cipher));
-}
-</code></pre><h3 id=3-rollover-operation>3. Rollover Operation
-<a class=anchor href=#3-rollover-operation>#</a></h3><p>Merges pending transfers into main balance:</p><pre tabindex=0><code class=language-cairo data-lang=cairo>fn rollover(ref self: TContractState, rollover: Rollover) {
-    // Verify ownership
-    verify_ownership(rollover.proof, rollover.to);
-    
-    // Move pending to balance
-    let pending = self.pending.read(rollover.to);
-    let balance = self.balance.read(rollover.to);
-    self.balance.write(rollover.to, cipher_add(balance, pending));
-    
-    // Clear pending
-    self.pending.write(rollover.to, CipherBalance { L: zero_point(), R: zero_point() });
-}
-</code></pre><hr><h2 id=security-features>Security Features
+<a class=anchor href=#1-fund-operation>#</a></h3><p>Converts ERC20 tokens to encrypted balances:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=display:flex><span><span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>fund</span>(<span style=color:#66d9ef>ref</span> self: <span style=color:#a6e22e>TContractState</span>, fund: <span style=color:#a6e22e>Fund</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Verify proof of ownership
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    verify_fund(fund.proof, fund.to, fund.amount);
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Transfer ERC20 from user (implementation details vary)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#75715e>// let erc20 = IERC20Dispatcher { contract_address: erc20_address };
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#75715e>// erc20.transfer_from(get_caller_address(), get_contract_address(), fund.amount.into());
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Create encrypted balance
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>let</span> cipher <span style=color:#f92672>=</span> encrypt_balance(fund.amount, fund.to);
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Update storage
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    self.balance.write(fund.to, cipher_add(self.balance.read(fund.to), cipher));
+</span></span><span style=display:flex><span>    self.nonce.write(fund.to, self.nonce.read(fund.to) <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=2-transfer-operation>2. Transfer Operation
+<a class=anchor href=#2-transfer-operation>#</a></h3><p>Performs confidential transfers between accounts:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=display:flex><span><span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>transfer</span>(<span style=color:#66d9ef>ref</span> self: <span style=color:#a6e22e>TContractState</span>, transfer: <span style=color:#a6e22e>Transfer</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Verify comprehensive transfer proof
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    verify_transfer(transfer.proof, <span style=color:#75715e>/* public inputs */</span>);
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Update sender balance (subtract)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>let</span> sender_cipher <span style=color:#f92672>=</span> CipherBalance { L: <span style=color:#a6e22e>transfer</span>.L, R: <span style=color:#a6e22e>transfer</span>.R };
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> old_balance <span style=color:#f92672>=</span> self.balance.read(transfer.from);
+</span></span><span style=display:flex><span>    self.balance.write(transfer.from, cipher_subtract(old_balance, sender_cipher));
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Update receiver pending (add)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>let</span> receiver_cipher <span style=color:#f92672>=</span> CipherBalance { L: <span style=color:#a6e22e>transfer</span>.L_rec, R: <span style=color:#a6e22e>transfer</span>.R };
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> old_pending <span style=color:#f92672>=</span> self.pending.read(transfer.to);
+</span></span><span style=display:flex><span>    self.pending.write(transfer.to, cipher_add(old_pending, receiver_cipher));
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Update auditor balance
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>let</span> audit_cipher <span style=color:#f92672>=</span> CipherBalance { L: <span style=color:#a6e22e>transfer</span>.L_audit, R: <span style=color:#a6e22e>transfer</span>.R };
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> old_audit <span style=color:#f92672>=</span> self.audit_balance.read(transfer.from);
+</span></span><span style=display:flex><span>    self.audit_balance.write(transfer.from, cipher_subtract(old_audit, audit_cipher));
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=3-rollover-operation>3. Rollover Operation
+<a class=anchor href=#3-rollover-operation>#</a></h3><p>Merges pending transfers into main balance:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=display:flex><span><span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>rollover</span>(<span style=color:#66d9ef>ref</span> self: <span style=color:#a6e22e>TContractState</span>, rollover: <span style=color:#a6e22e>Rollover</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Verify ownership
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    verify_ownership(rollover.proof, rollover.to);
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Move pending to balance
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>let</span> pending <span style=color:#f92672>=</span> self.pending.read(rollover.to);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> balance <span style=color:#f92672>=</span> self.balance.read(rollover.to);
+</span></span><span style=display:flex><span>    self.balance.write(rollover.to, cipher_add(balance, pending));
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Clear pending
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    self.pending.write(rollover.to, CipherBalance { L: <span style=color:#a6e22e>zero_point</span>(), R: <span style=color:#a6e22e>zero_point</span>() });
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><hr><h2 id=security-features>Security Features
 <a class=anchor href=#security-features>#</a></h2><h3 id=anti-spam-protection>Anti-Spam Protection
 <a class=anchor href=#anti-spam-protection>#</a></h3><ul><li><strong>Pending balance system</strong>: Incoming transfers go to separate pending storage</li><li><strong>Explicit rollover</strong>: Users must claim pending transfers</li><li><strong>Nonce protection</strong>: Prevents replay attacks</li></ul><h3 id=range-proof-security>Range Proof Security
 <a class=anchor href=#range-proof-security>#</a></h3><ul><li><strong>32-bit decomposition</strong>: Ensures amounts are in valid range [0, 2³²)</li><li><strong>Bit verification</strong>: Each bit proven to be 0 or 1 using OR proofs</li><li><strong>Overflow prevention</strong>: Prevents negative balances and money creation</li></ul><h3 id=cryptographic-guarantees>Cryptographic Guarantees
 <a class=anchor href=#cryptographic-guarantees>#</a></h3><ul><li><strong>Discrete log assumption</strong>: Security based on Stark curve</li><li><strong>Fiat-Shamir</strong>: Makes interactive proofs non-interactive</li><li><strong>Context binding</strong>: Proofs tied to specific transactions</li></ul><hr><h2 id=deployment>Deployment
 <a class=anchor href=#deployment>#</a></h2><h3 id=configuration>Configuration
-<a class=anchor href=#configuration>#</a></h3><pre tabindex=0><code class=language-cairo data-lang=cairo>// Contract constructor
-fn constructor(
-    ref self: ContractState,
-    strk_address: ContractAddress,    // ERC20 token to wrap
-    view: PubKey                      // Global auditor public key
-) {
-    self.strk_address.write(strk_address);
-    self.view.write(view);
-}
-</code></pre><h3 id=dependencies>Dependencies
+<a class=anchor href=#configuration>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=display:flex><span><span style=color:#75715e>// Contract constructor
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>constructor</span>(
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>ref</span> self: <span style=color:#a6e22e>ContractState</span>,
+</span></span><span style=display:flex><span>    strk_address: <span style=color:#a6e22e>ContractAddress</span>,    <span style=color:#75715e>// ERC20 token to wrap
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    view: <span style=color:#a6e22e>PubKey</span>                      <span style=color:#75715e>// Global auditor public key
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>) {
+</span></span><span style=display:flex><span>    self.strk_address.write(strk_address);
+</span></span><span style=display:flex><span>    self.view.write(view);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=dependencies>Dependencies
 <a class=anchor href=#dependencies>#</a></h3><ul><li><strong>Starknet Foundry</strong>: Testing framework</li><li><strong>Custom ERC20</strong>: Token implementation for STRK</li><li><strong>Cairo 2.8.4</strong>: Contract language version</li></ul><h3 id=gas-optimization>Gas Optimization
 <a class=anchor href=#gas-optimization>#</a></h3><p>The contract is optimized for Starknet&rsquo;s Cairo VM:</p><table><thead><tr><th>Operation</th><th>Cairo Steps</th><th>Optimization</th></tr></thead><tbody><tr><td>Fund</td><td>~50K</td><td>Single POE proof</td></tr><tr><td>Transfer</td><td>~120K</td><td>Efficient range proofs</td></tr><tr><td>Withdraw</td><td>~80K</td><td>Minimized operations</td></tr><tr><td>Rollover</td><td>~30K</td><td>Simple balance addition</td></tr></tbody></table><hr><h2 id=testing>Testing
 <a class=anchor href=#testing>#</a></h2><p>Comprehensive test suite covers:</p><ul><li><strong>Unit tests</strong>: Individual function verification</li><li><strong>Integration tests</strong>: Full operation flows</li><li><strong>Proof tests</strong>: ZK proof generation and verification</li><li><strong>Edge cases</strong>: Error conditions and boundary values</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Run all tests</span>
