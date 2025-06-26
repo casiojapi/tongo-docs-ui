@@ -21,40 +21,17 @@
  &lt;a class="anchor" href="#elgamal-encryption">#&lt;/a>
 &lt;/h2>
 &lt;p>Each user&amp;rsquo;s balance is encrypted using a public key derived from their private key. The encryption function is defined as:&lt;/p>
-$$\begin{aligned}
-\text{Enc}[y]: [0, b_{\max}) \times \mathbb{F}_p &amp;\rightarrow G^2 \\
-\text{Enc}[y](b,r) &amp;= (L, R) = (g^b y^r, g^r)
-\end{aligned}$$&lt;p>Where:&lt;/p>
+&lt;p>$$\begin{aligned}
+\text{Enc}[y]: [0, b_{\max}) \times \mathbb{F}_p &amp;amp;\rightarrow G^2 \
+\text{Enc}[y]\left(b,r\right) &amp;amp;= (L, R) = (g^b y^r, g^r)
+\end{aligned}$$&lt;/p>
+&lt;p>Where:&lt;/p>
 &lt;ul>
-&lt;li>
-&lt;link rel="stylesheet" href="https://docs.tongo.cash/katex/katex.min.css" />
-&lt;script defer src="https://docs.tongo.cash/katex/katex.min.js">&lt;/script>
-&lt;script defer src="https://docs.tongo.cash/katex/auto-render.min.js" onload="renderMathInElement(document.body);">&lt;/script>&lt;span>
- \(y = g^x\)
-&lt;/span>
- is the user&amp;rsquo;s public key (derived from private key &lt;span>
- \(x\)
-&lt;/span>
-)&lt;/li>
-&lt;li>&lt;span>
- \(g\)
-&lt;/span>
- is the generator of the Stark curve&lt;/li>
-&lt;li>&lt;span>
- \(b\)
-&lt;/span>
- is the balance amount in the range &lt;span>
- \([0, b_{\max})\)
-&lt;/span>
-&lt;/li>
-&lt;li>&lt;span>
- \(r\)
-&lt;/span>
- is a random blinding factor&lt;/li>
-&lt;li>&lt;span>
- \(p\)
-&lt;/span>
- is the curve order&lt;/li>
+&lt;li>$y = g^x$ is the user&amp;rsquo;s public key (derived from private key $x$)&lt;/li>
+&lt;li>$g$ is the generator of the Stark curve&lt;/li>
+&lt;li>$b$ is the balance amount in the range $[0, b_{\max})$&lt;/li>
+&lt;li>$r$ is a random blinding factor&lt;/li>
+&lt;li>$p$ is the curve order&lt;/li>
 &lt;/ul>
 &lt;h2 id="additive-homomorphism">
  Additive Homomorphism
@@ -103,7 +80,7 @@ $$\begin{aligned}
  Concept
  &lt;a class="anchor" href="#concept">#&lt;/a>
 &lt;/h3>
-&lt;p>The Tongo contract can designate a &lt;strong>global auditor&lt;/strong> with public key (y_a). All transfers are automatically encrypted for this auditor, providing a comprehensive audit trail without revealing amounts on-chain.&lt;/p></description></item><item><title>SDK Documentation</title><link>https://docs.tongo.cash/docs/sdk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/sdk/</guid><description>&lt;h1 id="sdk-documentation">
+&lt;p>The Tongo contract can designate a &lt;strong>global auditor&lt;/strong> with public key $y_a$. All transfers are automatically encrypted for this auditor, providing a comprehensive audit trail without revealing amounts on-chain.&lt;/p></description></item><item><title>SDK Documentation</title><link>https://docs.tongo.cash/docs/sdk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/sdk/</guid><description>&lt;h1 id="sdk-documentation">
  SDK Documentation
  &lt;a class="anchor" href="#sdk-documentation">#&lt;/a>
 &lt;/h1>
@@ -269,4 +246,4 @@ $$\begin{aligned}
  Proof of Exponent (POE)
  &lt;a class="anchor" href="#proof-of-exponent-poe">#&lt;/a>
 &lt;/h3>
-&lt;p>Proves knowledge of discrete logarithm \\(x\\) such that \\(y = g^x\\):&lt;/p></description></item><item><title/><link>https://docs.tongo.cash/docs/math-test/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/math-test/</guid><description/></item></channel></rss>
+&lt;p>Proves knowledge of discrete logarithm \(x\) such that \(y = g^x\):&lt;/p></description></item><item><title/><link>https://docs.tongo.cash/docs/math-test/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/math-test/</guid><description/></item></channel></rss>
