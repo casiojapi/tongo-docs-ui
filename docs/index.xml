@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docs on Tongo Protocol</title><link>http://localhost:1313/docs/</link><description>Recent content in Docs on Tongo Protocol</description><generator>Hugo</generator><language>en-us</language><atom:link href="http://localhost:1313/docs/index.xml" rel="self" type="application/rss+xml"/><item><title>Introduction</title><link>http://localhost:1313/docs/intro-to-tongo/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://localhost:1313/docs/intro-to-tongo/</guid><description>&lt;h1 id="introduction-to-tongo">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docs on Tongo Protocol</title><link>https://docs.tongo.cash/docs/</link><description>Recent content in Docs on Tongo Protocol</description><generator>Hugo</generator><language>en-us</language><atom:link href="https://docs.tongo.cash/docs/index.xml" rel="self" type="application/rss+xml"/><item><title>Introduction</title><link>https://docs.tongo.cash/docs/intro-to-tongo/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/intro-to-tongo/</guid><description>&lt;h1 id="introduction-to-tongo">
  Introduction to Tongo
  &lt;a class="anchor" href="#introduction-to-tongo">#&lt;/a>
 &lt;/h1>
@@ -11,7 +11,7 @@
  No Trusted Setup
  &lt;a class="anchor" href="#no-trusted-setup">#&lt;/a>
 &lt;/h3>
-&lt;p>Unlike many ZK systems (Zcash, Tornado Cash), Tongo requires &lt;strong>no trusted ceremony&lt;/strong>. All cryptography is built on the discrete logarithm assumption over the Stark curve, with no hidden trapdoors or setup parameters.&lt;/p></description></item><item><title>Encryption System</title><link>http://localhost:1313/docs/encryption/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://localhost:1313/docs/encryption/</guid><description>&lt;h1 id="encryption-system">
+&lt;p>Unlike many ZK systems (Zcash, Tornado Cash), Tongo requires &lt;strong>no trusted ceremony&lt;/strong>. All cryptography is built on the discrete logarithm assumption over the Stark curve, with no hidden trapdoors or setup parameters.&lt;/p></description></item><item><title>Encryption System</title><link>https://docs.tongo.cash/docs/encryption/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/encryption/</guid><description>&lt;h1 id="encryption-system">
  Encryption System
  &lt;a class="anchor" href="#encryption-system">#&lt;/a>
 &lt;/h1>
@@ -36,7 +36,7 @@ $$\begin{aligned}
  Additive Homomorphism
  &lt;a class="anchor" href="#additive-homomorphism">#&lt;/a>
 &lt;/h2>
-&lt;p>The key property that makes Tongo efficient is &lt;strong>additive homomorphism&lt;/strong>. Given two encryptions under the same public key, their product is a valid encryption of the sum:&lt;/p></description></item><item><title>Transfer Protocol</title><link>http://localhost:1313/docs/transfer/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://localhost:1313/docs/transfer/</guid><description>&lt;h1 id="transfer-protocol">
+&lt;p>The key property that makes Tongo efficient is &lt;strong>additive homomorphism&lt;/strong>. Given two encryptions under the same public key, their product is a valid encryption of the sum:&lt;/p></description></item><item><title>Transfer Protocol</title><link>https://docs.tongo.cash/docs/transfer/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/transfer/</guid><description>&lt;h1 id="transfer-protocol">
  Transfer Protocol
  &lt;a class="anchor" href="#transfer-protocol">#&lt;/a>
 &lt;/h1>
@@ -45,13 +45,13 @@ $$\begin{aligned}
  Transfer Overview
  &lt;a class="anchor" href="#transfer-overview">#&lt;/a>
 &lt;/h2>
-&lt;p>When a user (sender) with public key (y_s) and balance (b_0) wants to transfer amount (b &amp;lt; b_0) to a receiver with public key (y_r), they must:&lt;/p>
+&lt;p>When a user (sender) with public key $y_s$ and balance $b_0$ wants to transfer amount $b &amp;lt; b_0$ to a receiver with public key $y_r$, they must:&lt;/p>
 &lt;ol>
 &lt;li>&lt;strong>Create encryptions&lt;/strong> for sender, receiver, and auditor&lt;/li>
 &lt;li>&lt;strong>Generate ZK proofs&lt;/strong> to validate the transaction&lt;/li>
 &lt;li>&lt;strong>Submit transaction&lt;/strong> with ciphertexts and proofs&lt;/li>
 &lt;/ol>
-&lt;p>The key insight is that balances are updated &lt;strong>homomorphically&lt;/strong> without revealing the transfer amount.&lt;/p></description></item><item><title>Auditing &amp; Compliance</title><link>http://localhost:1313/docs/auditor/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://localhost:1313/docs/auditor/</guid><description>&lt;h1 id="auditing--compliance">
+&lt;p>The key insight is that balances are updated &lt;strong>homomorphically&lt;/strong> without revealing the transfer amount.&lt;/p></description></item><item><title>Auditing &amp; Compliance</title><link>https://docs.tongo.cash/docs/auditor/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/auditor/</guid><description>&lt;h1 id="auditing--compliance">
  Auditing &amp;amp; Compliance
  &lt;a class="anchor" href="#auditing--compliance">#&lt;/a>
 &lt;/h1>
@@ -64,7 +64,7 @@ $$\begin{aligned}
  Concept
  &lt;a class="anchor" href="#concept">#&lt;/a>
 &lt;/h3>
-&lt;p>The Tongo contract can designate a &lt;strong>global auditor&lt;/strong> with public key $y_a$. All transfers are automatically encrypted for this auditor, providing a comprehensive audit trail without revealing amounts on-chain.&lt;/p></description></item><item><title>SDK Documentation</title><link>http://localhost:1313/docs/sdk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://localhost:1313/docs/sdk/</guid><description>&lt;h1 id="sdk-documentation">
+&lt;p>The Tongo contract can designate a &lt;strong>global auditor&lt;/strong> with public key $y_a$. All transfers are automatically encrypted for this auditor, providing a comprehensive audit trail without revealing amounts on-chain.&lt;/p></description></item><item><title>SDK Documentation</title><link>https://docs.tongo.cash/docs/sdk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/sdk/</guid><description>&lt;h1 id="sdk-documentation">
  SDK Documentation
  &lt;a class="anchor" href="#sdk-documentation">#&lt;/a>
 &lt;/h1>
@@ -85,7 +85,7 @@ $$\begin{aligned}
  Starknet Homomorphic Encryption (SHE)
  &lt;a class="anchor" href="#starknet-homomorphic-encryption-she">#&lt;/a>
 &lt;/h3>
-&lt;p>Low-level cryptographic primitives for ElGamal encryption and ZK proof generation over the Stark curve.&lt;/p></description></item><item><title>Cairo Contracts</title><link>http://localhost:1313/docs/contracts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://localhost:1313/docs/contracts/</guid><description>&lt;h1 id="cairo-contracts">
+&lt;p>Low-level cryptographic primitives for ElGamal encryption and ZK proof generation over the Stark curve.&lt;/p></description></item><item><title>Cairo Contracts</title><link>https://docs.tongo.cash/docs/contracts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/contracts/</guid><description>&lt;h1 id="cairo-contracts">
  Cairo Contracts
  &lt;a class="anchor" href="#cairo-contracts">#&lt;/a>
 &lt;/h1>
@@ -132,7 +132,7 @@ $$\begin{aligned}
  Events
  &lt;a class="anchor" href="#events">#&lt;/a>
 &lt;/h3>
-&lt;p>The contract emits events for all operations to enable off-chain monitoring:&lt;/p></description></item><item><title>SHE Library</title><link>http://localhost:1313/docs/she/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://localhost:1313/docs/she/</guid><description>&lt;h1 id="starknet-homomorphic-encryption-she">
+&lt;p>The contract emits events for all operations to enable off-chain monitoring:&lt;/p></description></item><item><title>SHE Library</title><link>https://docs.tongo.cash/docs/she/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/she/</guid><description>&lt;h1 id="starknet-homomorphic-encryption-she">
  Starknet Homomorphic Encryption (SHE)
  &lt;a class="anchor" href="#starknet-homomorphic-encryption-she">#&lt;/a>
 &lt;/h1>
@@ -230,4 +230,4 @@ $$\begin{aligned}
  Proof of Exponent (POE)
  &lt;a class="anchor" href="#proof-of-exponent-poe">#&lt;/a>
 &lt;/h3>
-&lt;p>Proves knowledge of discrete logarithm \\(x\\) such that \\(y = g^x\\):&lt;/p></description></item><item><title/><link>http://localhost:1313/docs/math-test/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://localhost:1313/docs/math-test/</guid><description/></item></channel></rss>
+&lt;p>Proves knowledge of discrete logarithm \\(x\\) such that \\(y = g^x\\):&lt;/p></description></item><item><title/><link>https://docs.tongo.cash/docs/math-test/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://docs.tongo.cash/docs/math-test/</guid><description/></item></channel></rss>
